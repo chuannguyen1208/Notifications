@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  host.web:
+    image: ${DOCKER_REGISTRY-}hostweb
+    build:
+      context: .
+      dockerfile: Host.Web/Dockerfile
