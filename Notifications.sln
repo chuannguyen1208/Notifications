@@ -3,17 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.Web", "Host.Web\Host.Web.csproj", "{C87A30E7-E430-4A6A-ABA1-024D65C84487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.Web", "Host.Web\Host.Web.csproj", "{C87A30E7-E430-4A6A-ABA1-024D65C84487}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.SolutionItems", "0.SolutionItems", "{0C01F78A-0853-4C2F-816F-23E1CF25A9AB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{0C01F78A-0853-4C2F-816F-23E1CF25A9AB}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Utilities", "1.Utilities", "{7DB01527-3853-4F72-B81E-195834569264}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Utilities", "1. Utilities", "{7DB01527-3853-4F72-B81E-195834569264}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Modules", "2.Modules", "{1F300909-AC0A-4DD8-91BB-29DD05724311}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Modules", "2. Modules", "{1F300909-AC0A-4DD8-91BB-29DD05724311}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBE5DD95-514E-42AB-A181-B12A92C871C5}"
 EndProject
