@@ -30,10 +30,17 @@ public static class MassTransitInstaller
             x.AddSagas(entryAssembly);
             x.AddActivities(entryAssembly);
 
-            x.UsingInMemory((context, cfg) =>
+            x.UsingRabbitMq((context, cfg) =>
             {
+                cfg.Host(host: brokerSettings.Host, virtualHost: "/", h =>
+                {
+                    h.Username(brokerSettings.Username);
+                    h.Password(brokerSettings.Password);
+                });
+
                 cfg.ConfigureEndpoints(context);
             });
+
         });
 
         services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
