@@ -7,7 +7,7 @@ public interface IMessageSender
    Task PublishMessageAsync<T>(T message, CancellationToken cancellationToken = default) where T : class;
 }
 
-internal class MessageSender : IMessageSender
+public class MessageSender : IMessageSender
 {
    private readonly IBus _bus;
 

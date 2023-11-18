@@ -1,77 +1,67 @@
 ﻿using MassTransit;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using Tools.Messaging.Consumers;
+using Tools.Messaging.Messages;
 
 namespace Tools.Messaging;
 public static class MassTransitInstaller
 {
-   public static IServiceCollection AddAsyncProcessing(this IServiceCollection services, IConfiguration configuration, Assembly[] assembliesWithConsumers)
-   {
-      //Since we don't want the config to spill out do not add it as options to DI container.
-      var configData = configuration.GetSection("RabbitMQSettings");
-      var brokerSettings = new BrokerSettings();
-      configData.Bind(brokerSettings);
+    public static IServiceCollection AddAsyncProcessing(this IServiceCollection services, IConfiguration configuration, Assembly[] assembliesWithConsumers)
+    {
+        var configData = configuration.GetSection("RabbitMQSettings");
+        var brokerSettings = new BrokerSettings();
+        configData.Bind(brokerSettings);
 
-      // Resolve the DbContext for the OutBox
-      services.AddDbContext<RegistrationDbContext>(x =>
-      {
-         var connectionString = configuration.GetConnectionString("Default");
+        services.AddMassTransit(x =>
+        {
+            x.SetKebabCaseEndpointNameFormatter();
 
-         x.UseSqlServer(connectionString, options =>
-         {
-            options.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-            options.MigrationsHistoryTable($"__{nameof(RegistrationDbContext)}");
+            x.SetInMemorySagaRepositoryProvider();
 
-            options.EnableRetryOnFailure(3);
-            options.MinBatchSize(1);
-         });
-      });
+            var entryAssembly = Assembly.GetEntryAssembly();
 
-      services.AddMassTransit(x =>
-      {
-         x.SetKebabCaseEndpointNameFormatter();
+            x.AddConsumer<MyConsumer>();
+            x.AddSagaStateMachines(entryAssembly);
+            x.AddSagas(entryAssembly);
+            x.AddActivities(entryAssembly);
 
-         x.AddEntityFrameworkOutbox<RegistrationDbContext>(o =>
-         {
-            // configure which database lock provider to use (Postgres, SqlServer, or MySql)
-            o.UsePostgres();
-
-            // enable the bus outbox
-            o.UseBusOutbox();
-
-            o.QueryDelay = TimeSpan.FromMinutes(1);
-         });
-
-         x.AddConsumers(assembliesWithConsumers);
-         x.UsingRabbitMq((context, cfg) =>
-         {
-            cfg.Host(brokerSettings.Host, "/", h => {
-               h.Username(brokerSettings.Username);
-               h.Password(brokerSettings.Password);
+            x.UsingInMemory((context, cfg) =>
+            {
+                cfg.ConfigureEndpoints(context);
             });
-            cfg.AutoStart = true;
-            cfg.ConfigureEndpoints(context);
-         });
-      });
+        });
 
-      services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
+        services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
+        services.AddTransient<IMessageSender, MessageSender>();
 
-      services.AddTransient<IMessageSender, MessageSender>();
-      return services;
-   }
+        services.AddHostedService<Worker>();
 
-   public static IApplicationBuilder ApplyOutboxMigrations(this IApplicationBuilder app)
-   {
-      using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-      using var context = serviceScope.ServiceProvider.GetService<RegistrationDbContext>();
-      context?.Database.EnsureCreated();
-      context?.Database.Migrate();
+        return services;
+    }
 
-      return app;
-   }
+    public static IApplicationBuilder ApplyOutboxMigrations(this IApplicationBuilder app)
+    {
+        return app;
+    }
+}
+
+public class Worker(IMessageSender sender) : BackgroundService
+{
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            await sender
+                .PublishMessageAsync(new HelloMessage("RabbitMQ"), stoppingToken)
+                .ConfigureAwait(false);
+
+            await Task.Delay(1000, stoppingToken).ConfigureAwait(false);
+        }
+    }
 }
 

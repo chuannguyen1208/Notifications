@@ -235,8 +235,8 @@ dotnet_diagnostic.S125.severity = suggestion
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
-tab_width = 2
-indent_size = 2
+tab_width = 4
+indent_size = 4
 end_of_line = crlf
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
@@ -255,3 +255,4 @@ dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_diagnostic.CA1062.severity = silent
 dotnet_diagnostic.CA1852.severity = suggestion
+dotnet_diagnostic.CA2007.severity = suggestion

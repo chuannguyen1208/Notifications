@@ -1,9 +1,14 @@
 using Serilog;
+using System.Reflection;
 using Tools.ErrorHandling;
+using Tools.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services
+  .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: []);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,7 +22,9 @@ var app = builder.Build();
 
 Log.Information("Start application!");
 
-// app.UseErrorHandling();
+app
+  .UseErrorHandling()
+  .ApplyOutboxMigrations();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -29,7 +36,12 @@ app.MapGet("/", () =>
 {
     return "Ok";
 })
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithTags("Host").WithOpenApi();
+
+app.MapGet("/exception", () =>
+{
+    throw new ArgumentException("Test exception handling");
+})
+.WithTags("Host").WithOpenApi();
 
 app.Run();

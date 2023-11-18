@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Host.Web/Dockerfile
+    depends_on: 
+      - sqlserver
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -17,6 +19,16 @@ services:
       - "1433:1433"
     networks:
       - my_network
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # RabbitMQ management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
 
 networks:
   my_network:
