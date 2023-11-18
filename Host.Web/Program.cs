@@ -17,7 +17,7 @@ var app = builder.Build();
 
 Log.Information("Start application!");
 
-app.UseErrorHandling();
+// app.UseErrorHandling();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
