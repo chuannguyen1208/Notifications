@@ -1,4 +1,5 @@
 using Serilog;
+using Tools.ErrorHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Host.UseSerilog((context, configuration) =>
 var app = builder.Build();
 
 Log.Information("Start application!");
+
+app.UseErrorHandling();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
