@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,11 @@ public static class MassTransitInstaller
         var configData = configuration.GetSection("RabbitMQSettings");
         var brokerSettings = new BrokerSettings();
         configData.Bind(brokerSettings);
+
+        services.AddDbContext<RegistrationDbContext>(o =>
+        {
+            o.UseSqlServer(configuration.GetConnectionString("Default"));
+        });
 
         services.AddMassTransit(x =>
         {
@@ -41,6 +47,12 @@ public static class MassTransitInstaller
                 cfg.ConfigureEndpoints(context);
             });
 
+            // Outbox
+            x.AddEntityFrameworkOutbox<RegistrationDbContext>(o =>
+            {
+                o.UseSqlServer();
+                o.UseBusOutbox();
+            });
         });
 
         services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
@@ -53,6 +65,12 @@ public static class MassTransitInstaller
 
     public static IApplicationBuilder ApplyOutboxMigrations(this IApplicationBuilder app)
     {
+        using var scope = app.ApplicationServices.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RegistrationDbContext>();
+
+        dbContext.Database.EnsureCreated();
+        dbContext.Database.Migrate();
+
         return app;
     }
 }

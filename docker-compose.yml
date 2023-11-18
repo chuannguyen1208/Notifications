@@ -8,6 +8,8 @@ services:
       dockerfile: Host.Web/Dockerfile
     depends_on: 
       - sqlserver
+    networks:
+      - my_network
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
