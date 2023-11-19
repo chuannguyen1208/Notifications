@@ -2,13 +2,15 @@ using Serilog;
 using Tools.ErrorHandling;
 using Tools.Logging;
 using Tools.Messaging;
+using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
     .AddSerilogLogging(builder.Configuration)
-    .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: []);
+    .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: [])
+    .AddSwagger();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -23,10 +25,6 @@ Log.Information("Start application!");
 app
     .UseErrorHandling()
     .ApplyOutboxMigrations();
-
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -43,5 +41,19 @@ app.MapGet("/exception", () =>
 })
 .WithTags("Host")
 .WithOpenApi();
+
+app.UseSwagger();
+app.UseSwaggerUI(opts =>
+{
+    var descriptions = app.DescribeApiVersions();
+    foreach (var groupName in descriptions.Select(d => d.GroupName))
+    {
+        opts.SwaggerEndpoint(
+            url: $"/swagger/{groupName}/swagger.json",
+            name: groupName);
+    }
+
+    opts.RoutePrefix = string.Empty;
+});
 
 app.Run();
