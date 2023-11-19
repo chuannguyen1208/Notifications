@@ -32,6 +32,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: rabbitmq
       RABBITMQ_DEFAULT_PASS: rabbitmq
+    networks:
+      - my_network
 
 networks:
   my_network:

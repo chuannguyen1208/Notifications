@@ -23,6 +23,7 @@
 		<PackageReference Include="O9d.AspNet.FluentValidation" />
 		<PackageReference Include="RabbitMQ.Client" />
 		<PackageReference Include="Serilog" />
+		<PackageReference Include="Serilog.Settings.Configuration" />
 		<PackageReference Include="StackExchange.Redis" />
 		<PackageReference Include="Swashbuckle.AspNetCore" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
