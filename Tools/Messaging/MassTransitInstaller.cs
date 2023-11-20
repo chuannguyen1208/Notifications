@@ -58,8 +58,6 @@ public static class MassTransitInstaller
         services.AddSingleton<ILockStatementProvider, PostgresLockStatementProvider>();
         services.AddTransient<IMessageSender, MessageSender>();
 
-        services.AddHostedService<Worker>();
-
         return services;
     }
 

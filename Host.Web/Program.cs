@@ -12,10 +12,6 @@ builder.Services
     .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: [])
     .AddSwagger();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Host.UseSerilog();
 
 var app = builder.Build();
@@ -28,19 +24,7 @@ app
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () =>
-{
-    return "Ok";
-})
-.WithTags("Host")
-.WithOpenApi();
-
-app.MapGet("/exception", () =>
-{
-    throw new ArgumentException("Test exception handling");
-})
-.WithTags("Host")
-.WithOpenApi();
+app.MapGet("/api", () => "Oke").WithTags("Host").WithOpenApi();
 
 app.UseSwagger();
 app.UseSwaggerUI(opts =>
