@@ -16,3 +16,9 @@ services:
   sqlserver:
     volumes:
       - ./.containers/mssql:/var/opt/mssql/data
+  elasticsearch:
+    volumes:
+      - ./.containers/elasticsearch-data:/usr/share/elasticsearch/data
+  kibana:
+    volumes:
+      - ./.containers/kibana:/usr/share/kibana/data

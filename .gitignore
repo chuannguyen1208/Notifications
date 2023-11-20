@@ -809,3 +809,6 @@ fabric.properties
 
 *.tar
 *.zip
+
+# Docker container data
+.containers

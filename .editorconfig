@@ -135,11 +135,11 @@ csharp_style_unused_value_expression_statement_preference = discard_variable
 csharp_using_directive_placement = outside_namespace:silent
 
 # New line preferences
-csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
-csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
-csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
-csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true
-csharp_style_allow_embedded_statements_on_same_line_experimental = true
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true:silent
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 
 #### C# Formatting Rules ####
 
@@ -149,7 +149,7 @@ csharp_new_line_before_else = true
 csharp_new_line_before_finally = true
 csharp_new_line_before_members_in_anonymous_types = true
 csharp_new_line_before_members_in_object_initializers = true
-csharp_new_line_before_open_brace = all
+csharp_new_line_before_open_brace = methods,properties,anonymous_methods,control_blocks,anonymous_types,object_collection_array_initializers,lambdas,accessors
 csharp_new_line_between_query_expression_clauses = true
 
 # Indentation preferences
@@ -256,3 +256,5 @@ dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_diagnostic.CA1062.severity = silent
 dotnet_diagnostic.CA1852.severity = suggestion
 dotnet_diagnostic.CA2007.severity = suggestion
+dotnet_style_allow_multiple_blank_lines_experimental = true:silent
+dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
