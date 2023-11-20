@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddSerilogLogging()
+    .AddSerilogLogging(builder.Configuration)
     .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: [])
     .AddSwagger();
 

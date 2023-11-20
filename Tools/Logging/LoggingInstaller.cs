@@ -9,30 +9,14 @@ using System.Reflection;
 
 namespace Tools.Logging;
 public static class LoggingInstaller {
-    public static IServiceCollection AddSerilogLogging(this IServiceCollection services, IConfiguration configuration)
-    {
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration)
-            .CreateLogger();
-
-        return services;
-    }
-
+    
     /// <summary>
     /// Serilog include elasticsearch
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
-    public static IServiceCollection AddSerilogLogging(this IServiceCollection services)
+    public static IServiceCollection AddSerilogLogging(this IServiceCollection services, IConfiguration configuration)
     {
-        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile(
-                $"appsettings.{environment}.json", optional: false
-            )
-            .Build();
-
         var elasticConfiguration = new ElasticConfiguration();
         configuration.Bind("ElasticConfiguration", elasticConfiguration);
 
