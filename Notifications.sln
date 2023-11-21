@@ -20,8 +20,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost", "src\WebHost\WebH
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Modules", "2.Modules", "{B4EE123E-9F96-479D-8881-68D28511D8E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Module.Blog", "src\Module.Blog\Module.Blog.csproj", "{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,17 +38,12 @@ Global
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A232BF24-7162-4847-9ABE-49DBF16FC497} = {6A2EF3E3-D980-45F3-9372-E14E3F7DF149}
-		{3DBFC6FB-977F-43A3-9FE9-A1FFBFDB1A43} = {B4EE123E-9F96-479D-8881-68D28511D8E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46F68595-1350-4924-A453-FD3937FDD8F8}

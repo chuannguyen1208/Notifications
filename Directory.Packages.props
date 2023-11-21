@@ -32,5 +32,6 @@
     <PackageVersion Include="O9d.AspNet.FluentValidation" Version="0.1.1" />
     <PackageVersion Include="RabbitMQ.Client" Version="6.6.0" />
     <PackageVersion Include="StackExchange.Redis" Version="2.7.4" />
+    <PackageVersion Include="Yarp.ReverseProxy" Version="2.1.0" />
   </ItemGroup>
 </Project>

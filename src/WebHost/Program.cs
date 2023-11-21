@@ -6,6 +6,9 @@ using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
 builder.Services
     .AddSwagger()
     .AddSerilogLogging(builder.Configuration)
@@ -15,7 +18,6 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app
     .UseErrorHandling()
     .ApplyOutboxMigrations();
@@ -34,7 +36,7 @@ app.UseSwaggerUI(opts =>
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Ok").WithOpenApi();
+app.MapReverseProxy();
 
 app.Run();
 
