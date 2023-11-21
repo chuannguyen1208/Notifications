@@ -4,9 +4,9 @@ services:
   host.web:
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerCompose
-      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTP_PORTS=80
     ports:
-      - "27572:8080"
+      - "8081:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

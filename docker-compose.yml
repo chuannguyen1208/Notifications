@@ -5,15 +5,16 @@ services:
     image: ${DOCKER_REGISTRY-}hostweb
     build:
       context: .
-      dockerfile: Host.Web/Dockerfile
+      dockerfile: WebHost/Dockerfile
     depends_on: 
       - sqlserver
     networks:
       - my_network
+    container_name: host
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
-    container_name: sql_server_container
+    container_name: mssql
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y

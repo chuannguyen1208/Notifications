@@ -6,25 +6,19 @@ using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services
+    .AddSwagger()
     .AddSerilogLogging(builder.Configuration)
-    .AddAsyncProcessing(builder.Configuration, assembliesWithConsumers: [])
-    .AddSwagger();
+    .AddAsyncProcessing(builder.Configuration, []);
 
 builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-Log.Information("Start application!");
-
+// Configure the HTTP request pipeline.
 app
     .UseErrorHandling()
     .ApplyOutboxMigrations();
-
-app.UseHttpsRedirection();
-
-app.MapGet("/api", () => "Oke").WithTags("Host").WithOpenApi();
 
 app.UseSwagger();
 app.UseSwaggerUI(opts =>
@@ -36,8 +30,11 @@ app.UseSwaggerUI(opts =>
             url: $"/swagger/{groupName}/swagger.json",
             name: groupName);
     }
-
-    opts.RoutePrefix = string.Empty;
 });
 
+app.UseHttpsRedirection();
+
+app.MapGet("/", () => "Ok").WithOpenApi();
+
 app.Run();
+
