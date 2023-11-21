@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.SolutionItems", "0.Soluti
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBE5DD95-514E-42AB-A181-B12A92C871C5}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "3.DockerCompose", "3.DockerCompose.dcproj", "{CBE5DD95-514E-42AB-A181-B12A92C871C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Utilities", "1.Utilities", "{6A2EF3E3-D980-45F3-9372-E14E3F7DF149}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost", "src\WebHost\WebHost.csproj", "{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Modules", "2.Modules", "{B4EE123E-9F96-479D-8881-68D28511D8E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "src\BlazorApp\BlazorApp.csproj", "{B1CDA514-966B-4504-9214-1E1FC59FE42C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
