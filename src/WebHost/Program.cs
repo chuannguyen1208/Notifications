@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using System.Security.Claims;
+using Tools.Auth;
 using Tools.ErrorHandling;
 using Tools.Logging;
 using Tools.Swagger;
@@ -12,13 +12,10 @@ builder.Services.AddReverseProxy()
 
 builder.Services
 	.AddSwagger()
-	.AddSerilogLogging(builder.Configuration);
+	.AddSerilogLogging(builder.Configuration)
+	.AddAuth();
 
 builder.Host.UseSerilog();
-
-builder.Services
-	.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-	.AddCookie();
 
 var app = builder.Build();
 
@@ -38,27 +35,12 @@ app.UseSwaggerUI(opts =>
 
 app.UseHttpsRedirection();
 
+app.MapAuth();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", () => "Ok").WithOpenApi();
-
-app.MapGet("/login", () =>
-{
-	var claims = new List<Claim>
-	{
-		new("id", Guid.NewGuid().ToString()),
-		new("name", "Admin")
-	};
-
-	var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-	var claimsPrinciple = new ClaimsPrincipal(claimsIdentity);
-	var signIn = Results.SignIn(claimsPrinciple, authenticationScheme: CookieAuthenticationDefaults.AuthenticationScheme);
-
-	return signIn;
-});
-
-app.MapGet("/logout", () => Results.SignOut());
+app.MapGet("/user", (ClaimsPrincipal user) => $"Hello {user.Identity!.Name}")
+	.RequireAuthorization();
 
 app.MapReverseProxy();
 
