@@ -20,8 +20,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHost", "src\WebHost\WebH
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Modules", "2.Modules", "{B4EE123E-9F96-479D-8881-68D28511D8E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "src\BlazorApp\BlazorApp.csproj", "{B1CDA514-966B-4504-9214-1E1FC59FE42C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B3BB41-E612-4FE1-AFAF-5362E8E9DED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1CDA514-966B-4504-9214-1E1FC59FE42C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
