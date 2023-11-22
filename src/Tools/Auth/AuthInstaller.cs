@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,16 +8,15 @@ public static class AuthInstaller
 {
 	public static IServiceCollection AddAuth(this IServiceCollection services)
 	{
-		services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			.AddCookie();
-
-		services.AddAuthorizationBuilder();
-
 		services.AddDbContext<AuthDbContext>(o => o.UseSqlite("DataSource=app.db"));
 
 		services.AddIdentityCore<IdentityUser>()
 			.AddEntityFrameworkStores<AuthDbContext>()
 			.AddApiEndpoints();
+
+		services
+			.AddAuthentication(IdentityConstants.ApplicationScheme)
+			.AddIdentityCookies();
 
 		return services;
 	}

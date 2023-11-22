@@ -36,11 +36,12 @@ app.UseSwaggerUI(opts =>
 app.UseHttpsRedirection();
 
 app.MapAuth();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/user", (ClaimsPrincipal user) => $"Hello {user.Identity!.Name}")
-	.RequireAuthorization();
+app.MapGet("/", () => "Ok").WithOpenApi();
+app.MapGet("/user", (ClaimsPrincipal user) => $"Hello {user.Identity!.Name}").RequireAuthorization().WithOpenApi();
 
 app.MapReverseProxy();
 
