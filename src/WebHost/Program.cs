@@ -11,8 +11,7 @@ builder.Services.AddReverseProxy()
 
 builder.Services
     .AddSwagger()
-    .AddSerilogLogging(builder.Configuration)
-    .AddAsyncProcessing(builder.Configuration, []);
+    .AddSerilogLogging(builder.Configuration);
 
 builder.Host.UseSerilog();
 
