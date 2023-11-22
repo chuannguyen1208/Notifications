@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Serilog.Exceptions;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.Elasticsearch;
-using System.Globalization;
-using System.Reflection;
 
 namespace Tools.Logging;
 

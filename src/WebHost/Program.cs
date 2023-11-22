@@ -3,7 +3,6 @@ using Serilog;
 using System.Security.Claims;
 using Tools.ErrorHandling;
 using Tools.Logging;
-using Tools.Messaging;
 using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
