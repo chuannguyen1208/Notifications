@@ -17,9 +17,7 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-app
-    .UseErrorHandling()
-    .ApplyOutboxMigrations();
+app.UseErrorHandling();
 
 app.UseSwagger();
 app.UseSwaggerUI(opts =>
