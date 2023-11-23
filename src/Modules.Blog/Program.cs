@@ -15,6 +15,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<Modules.Blog.ApiService>();
+
 var app = builder.Build();
 
 app.UsePathBase("/blog");

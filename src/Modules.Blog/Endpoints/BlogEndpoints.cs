@@ -8,6 +8,6 @@ public class BlogEndpoints : IEndpointsDefinition
 {
 	public static void ConfigureEndpoints(IEndpointRouteBuilder app)
 	{
-		app.MapGet("/blogs", (IMediator mediator) => mediator.Send(new GetBlogsQuery())).WithOpenApi();
+		app.MapGet("/api/blogs", (IMediator mediator) => mediator.Send(new GetBlogsQuery())).WithOpenApi();
 	}
 }

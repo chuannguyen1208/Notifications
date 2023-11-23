@@ -11,10 +11,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Components\Pages\Blogs\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\Modules.Blog.UseCases\Modules.Blog.UseCases.csproj" />
 		<ProjectReference Include="..\Tools\Tools.csproj" />
 	</ItemGroup>

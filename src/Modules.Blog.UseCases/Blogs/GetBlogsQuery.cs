@@ -14,7 +14,13 @@ public class GetBlogsQuery : IRequest<IEnumerable<BlogDto>>
 				{
 					Id = 1,
 					Name = "Notification",
-					Description = "Notification with Messaging"
+					Description = "Notification with Messaging."
+				},
+				new()
+				{
+					Id= 2,
+					Name = ".NET Aspire",
+					Description = ".NET Aspire simplify cloud and services dependency."
 				}
 			});
 		}
