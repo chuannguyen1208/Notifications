@@ -9,13 +9,16 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
 		<PackageReference Include="FluentResults" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
 		<PackageReference Include="Hangfire.AspNetCore" />
 		<PackageReference Include="Hangfire.PostgreSql" />
 		<PackageReference Include="MassTransit" />
 		<PackageReference Include="MassTransit.EntityFrameworkCore" />
 		<PackageReference Include="MassTransit.Extensions.DependencyInjection" />
 		<PackageReference Include="MassTransit.RabbitMQ" />
+		<PackageReference Include="MediatR" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />

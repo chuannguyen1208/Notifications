@@ -11,7 +11,7 @@ builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.Services
-	.AddSwagger()
+	.AddSwaggerTool()
 	.AddSerilogLogging(builder.Configuration)
 	.AddAuth();
 

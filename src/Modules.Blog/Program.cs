@@ -1,11 +1,19 @@
-using Modules.Blog.Client.Pages;
 using Modules.Blog.Components;
+using Modules.Blog.Endpoints;
+using Tools.Swagger;
+using Tools.Routing;
+using Tools.MediatR;
+using System.Reflection;
+using Modules.Blog.UseCases.Blogs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddSwaggerTool()
+	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
 var app = builder.Build();
 
@@ -15,6 +23,7 @@ app.UsePathBase("/blog");
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+	app.UseSwaggerTool();
 }
 else
 {
@@ -29,7 +38,8 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddInteractiveWebAssemblyRenderMode();
+
+app.UseEndpoints<BlogEndpoints>();
 
 app.Run();
