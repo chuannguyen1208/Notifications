@@ -99,3 +99,4 @@ dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_code_quality_unused_parameters = all:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 dotnet_diagnostic.CA1051.severity = suggestion
+dotnet_style_collection_initializer = true:suggestion
