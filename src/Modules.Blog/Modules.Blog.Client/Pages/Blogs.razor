@@ -1,0 +1,36 @@
+﻿@page "/blogs"
+@using System.Text.Json
+@inject HttpClient Http
+
+@if (loading)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <ul>
+        @foreach (var blog in blogs)
+        {
+            <li>@blog.Title - @blog.Description</li>
+        }
+    </ul>
+}
+
+@code {
+    IEnumerable<BlogDto> blogs = Enumerable.Empty<BlogDto>();
+    bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var res = await Http.GetFromJsonAsync<List<BlogDto>>("api/blogs");
+            if (res is not null)
+                blogs = res;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+}
