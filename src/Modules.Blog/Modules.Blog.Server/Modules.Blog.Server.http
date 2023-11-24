@@ -1,6 +1,0 @@
-@Modules.Blog.Server_HostAddress = http://localhost:5048
-
-GET {{Modules.Blog.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
