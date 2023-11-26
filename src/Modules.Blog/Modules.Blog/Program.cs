@@ -1,5 +1,13 @@
 using Modules.Blog.Client.Pages;
 using Modules.Blog.Components;
+using System.Reflection;
+using Tools.Swagger;
+using Tools.MediatR;
+using Modules.Blog.UseCases.Blogs.Queries;
+using Tools.Routing;
+using Modules.Blog.UseCases.Blogs;
+using Modules.Blog.Client.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +16,18 @@ builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents()
 	.AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddSwaggerTool()
+	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
+
+builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5223"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseWebAssemblyDebugging();
+	app.UseSwaggerTool();
 }
 else
 {
@@ -31,5 +45,7 @@ app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
 	.AddAdditionalAssemblies(typeof(Counter).Assembly);
+
+app.UseEndpoints<BlogEndpoints>();
 
 app.Run();

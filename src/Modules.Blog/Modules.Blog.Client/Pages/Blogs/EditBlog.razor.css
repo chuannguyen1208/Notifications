@@ -1,0 +1,28 @@
+﻿.background-image {
+    background-image: url('img/cover.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-transparent-gray {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.cs-input {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    color: #fff;
+}
+
+    .cs-input::placeholder {
+        color: #fff;
+    }
+
+    .cs-input:focus {
+        outline: none;
+        background: none;
+        box-shadow: none;
+        color: #fff;
+        border: 1px dashed #ccc;
+    }

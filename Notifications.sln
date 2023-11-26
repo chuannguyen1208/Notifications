@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Blog.Shared", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Blog.UseCases", "src\Modules.Blog\Modules.Blog.UseCases\Modules.Blog.UseCases.csproj", "{5AFDCEDD-6A03-4EA3-A971-0F9F895922B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Blog", "src\Modules.Blog\Modules.Blog\Modules.Blog.csproj", "{68A3221E-2AE0-4D1D-981B-43C7541E7A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Blog", "src\Modules.Blog\Modules.Blog\Modules.Blog.csproj", "{68A3221E-2AE0-4D1D-981B-43C7541E7A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Blog.Client", "src\Modules.Blog\Modules.Blog.Client\Modules.Blog.Client.csproj", "{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Blog.Client", "src\Modules.Blog\Modules.Blog.Client\Modules.Blog.Client.csproj", "{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

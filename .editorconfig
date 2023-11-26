@@ -103,3 +103,5 @@ dotnet_style_collection_initializer = true:suggestion
 dotnet_diagnostic.S2094.severity = none
 dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.S6580.severity = none
+dotnet_diagnostic.S1075.severity = none
+
