@@ -9,6 +9,8 @@
 @code {
     [Parameter] public EventCallback EditorInitialized { get; set; } = default!;
     [Parameter] public EventCallback<string> OnTextChanged { get; set; }
+    [Parameter] public string Value { get; set; } = string.Empty;
+
     IJSObjectReference quill = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -19,7 +21,14 @@
             await quill.InvokeVoidAsync("BlazorQuill.init", "#editor");
             await quill.InvokeVoidAsync("BlazorQuill.listen", DotNetObjectReference.Create<MyComps.RichEditor>(this));
             await EditorInitialized.InvokeAsync();
+            await SetQuillContent();
         }
+    }
+
+    async Task SetQuillContent()
+    {
+        Value = "Init Value";
+        await quill.InvokeVoidAsync("BlazorQuill.setContent", Value);
     }
 
     [JSInvokable]

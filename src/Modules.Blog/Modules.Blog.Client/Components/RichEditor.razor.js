@@ -27,6 +27,11 @@
             }
         }.bind(this));
     }
+
+    static setContent(content) {
+        const delta = this.quill.clipboard.convert(content);
+        this.quill.setContents(delta, 'silent');
+    }
 }
 
 window.BlazorQuill = BlazorQuill;
