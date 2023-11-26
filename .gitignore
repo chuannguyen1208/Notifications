@@ -812,3 +812,6 @@ fabric.properties
 
 # Docker container data
 .containers
+
+*.db
+*.db-*
