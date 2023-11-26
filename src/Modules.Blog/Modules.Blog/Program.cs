@@ -7,6 +7,7 @@ using Modules.Blog.UseCases.Blogs.Queries;
 using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
+using Modules.Blog.UseCases;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
+
+builder.Services.AddBlogsUseCases();
 
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5223"));
 

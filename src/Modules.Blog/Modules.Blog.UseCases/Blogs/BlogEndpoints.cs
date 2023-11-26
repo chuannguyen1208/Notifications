@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Modules.Blog.Shared;
 using Modules.Blog.UseCases.Blogs.Commands;
 using Modules.Blog.UseCases.Blogs.Queries;
 using Tools.Routing;
@@ -13,10 +11,9 @@ public class BlogEndpoints : IEndpointsDefinition
 	public static void ConfigureEndpoints(IEndpointRouteBuilder app)
 	{
 		app.MapGet("/api/blogs", (IMediator mediator) => mediator.Send(new GetBlogsQuery())).WithOpenApi();
-		app.MapPost("/api/blogs", (EditBlogDto model, IMediator mediator, IMapper mapper) =>
+		app.MapPost("/api/blogs", (EditBlogCommand model, IMediator mediator) =>
 		{
-			var command = mapper.Map<EditBlogCommand>(model);
-			return mediator.Send(command);
+			return mediator.Send(model);
 		});
 	}
 }
