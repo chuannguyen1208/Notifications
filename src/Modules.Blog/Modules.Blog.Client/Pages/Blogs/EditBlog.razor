@@ -2,6 +2,7 @@
 @using Modules.Blog.Shared
 @rendermode InteractiveServer
 @inject BlogsService BlogsService
+@inject NavigationManager Navigation
 
 <PageTitle>@(Id.HasValue ? "Edit" : "New blog")</PageTitle>
 
@@ -23,7 +24,7 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <div class="form-group">
-            <InputTextArea id="Description" class="form-control" placeholder="Content" @bind-Value="Blog.Description" />
+            <MyComps.RichEditor></MyComps.RichEditor>
         </div>
     </div>
 </div>
@@ -45,6 +46,7 @@
     async Task Save()
     {
         await BlogsService.EditBlogAsync(Blog);
+        Navigation.NavigateTo("/blogs");
     }
 
     async Task Publish()
