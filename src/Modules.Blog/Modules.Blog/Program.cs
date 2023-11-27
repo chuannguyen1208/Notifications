@@ -25,6 +25,8 @@ builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new 
 
 var app = builder.Build();
 
+app.UsePathBase("/blogs");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
