@@ -1,4 +1,3 @@
-using Modules.Blog.Client.Pages;
 using Modules.Blog.Components;
 using System.Reflection;
 using Tools.Swagger;
@@ -47,7 +46,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(Counter).Assembly);
+	.AddAdditionalAssemblies(typeof(BlogsService).Assembly);
 
 app.UseEndpoints<BlogEndpoints>();
 

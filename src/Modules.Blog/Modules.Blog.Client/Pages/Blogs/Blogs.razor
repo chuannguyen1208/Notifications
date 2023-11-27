@@ -1,4 +1,4 @@
-﻿@page "/blogs"
+﻿@page "/"
 @inject BlogsService BlogsService
 
 @if (loading)
@@ -16,7 +16,12 @@ else
                     <div class="card-body">
                         <h5 class="card-title">@blog.Title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div class="d-flex justify-content-between card-bottom">
+                            <i class="bi-alarm"></i>
+                            <button type="button" class="btn btn-link btn-sm pl-0">
+                                Read
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
