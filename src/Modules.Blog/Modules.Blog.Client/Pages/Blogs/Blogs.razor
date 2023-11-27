@@ -15,10 +15,17 @@ else
                     <img src="img/cover.jpg" class="card-img-top" alt="@blog.Title">
                     <div class="card-body">
                         <h5 class="card-title">@blog.Title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div class="d-flex justify-content-between card-bottom">
-                            <i class="bi-alarm"></i>
-                            <button type="button" class="btn btn-link btn-sm pl-0">
+                        <p class="card-text">@blog.Description</p>
+                        <div class="d-flex justify-content-between align-items-center card-bottom">
+                            <span>
+                                <i class="bi-alarm me-1"></i>
+                                Author
+                            </span>
+                            <span>
+                                <i class="bi bi-calendar2 me-1"></i>
+                                2022-01-01
+                            </span>
+                            <button type="button" class="btn btn-link btn-sm">
                                 Read
                             </button>
                         </div>

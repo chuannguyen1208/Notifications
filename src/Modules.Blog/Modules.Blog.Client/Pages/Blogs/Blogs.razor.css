@@ -1,10 +1,15 @@
 ﻿.card-text {
     color: #777;
+    font-size: 14px;
 }
 
 .card-bottom {
     color: #777;
 }
+
+    .card-bottom span {
+        font-size: 14px;
+    }
 
 .btn-link {
     color: #777;

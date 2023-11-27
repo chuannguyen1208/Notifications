@@ -27,7 +27,6 @@
 
     async Task SetQuillContent()
     {
-        Value = "Init Value";
         await quill.InvokeVoidAsync("BlazorQuill.setContent", Value);
     }
 
