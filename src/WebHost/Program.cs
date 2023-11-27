@@ -1,8 +1,6 @@
 using Serilog;
-using Tools.Auth;
 using Tools.ErrorHandling;
 using Tools.Logging;
-using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,20 +8,17 @@ builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 builder.Services
-	.AddSwaggerTool()
-	.AddSerilogLogging(builder.Configuration)
-	.AddAuth();
+	.AddSerilogLogging(builder.Configuration);
+
+builder.Services.AddAuthentication();
 
 builder.Host.UseSerilog();
 
 var app = builder.Build();
 
 app.UseErrorHandling();
-app.UseSwaggerTool();
 
 app.UseHttpsRedirection();
-
-app.MapAuth();
 
 app.UseAuthentication();
 app.UseAuthorization();
