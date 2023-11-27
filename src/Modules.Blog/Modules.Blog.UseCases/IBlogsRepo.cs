@@ -20,12 +20,14 @@ internal class BlogsRepoSample : IBlogsRepo
 				Id = 1,
 				Title = "Title",
 				Description = "Description",
+				Created = DateTimeOffset.Parse("2022-01-01")
 			},
 			new BlogEntity
 			{
 				Id = 2,
 				Title = "Title 2",
 				Description = "Description",
+				Created = DateTimeOffset.Parse("2022-01-02")
 			},
 		];
 	}
@@ -34,6 +36,7 @@ internal class BlogsRepoSample : IBlogsRepo
 	{
 		var maxId = _blogEntities.Select(s => s.Id).Max();
 		blog.Id = maxId + 1;
+		blog.Created = DateTimeOffset.UtcNow;
 		_blogEntities.Add(blog);
 		await Task.CompletedTask;
 	}
