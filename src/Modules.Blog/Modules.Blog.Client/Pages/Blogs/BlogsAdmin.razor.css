@@ -1,0 +1,12 @@
+﻿.list-group {
+    width: 600px;
+}
+
+.btn-new-post {
+    font-size: 14px;
+}
+
+.form-check-input:focus {
+    outline: none;
+    box-shadow: none;
+}

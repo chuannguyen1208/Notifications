@@ -18,9 +18,10 @@ internal class BlogsRepoSample : IBlogsRepo
 			new BlogEntity
 			{
 				Id = 1,
-				Title = "Title",
+				Title = "Title 1",
 				Description = "Description",
-				Created = DateTimeOffset.Parse("2022-01-01")
+				Created = DateTimeOffset.Parse("2022-01-01"),
+				Published = true
 			},
 			new BlogEntity
 			{
