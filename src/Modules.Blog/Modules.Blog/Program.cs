@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var identityUrl = builder.Configuration.GetValue<string>("IdentityUrl") ?? "http://localhost:5002";
+var callBackUrl = builder.Configuration.GetValue<string>("CallBackUrl") ?? "http://localhost:5002";
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents()
@@ -20,17 +23,21 @@ builder.Services.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
 builder.Services.AddBlogsUseCases();
-
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5003"));
 
 builder.Services.AddAuthentication(options =>
-	{
-		options.DefaultScheme = IdentityConstants.ApplicationScheme;
-		options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-	})
-	.AddIdentityCookies();
-
-builder.Services.AddAuthorization();
+{
+	options.DefaultScheme = IdentityConstants.ApplicationScheme;
+	options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+.AddCookie()
+.AddOpenIdConnect(options =>
+{
+	options.SignInScheme = IdentityConstants.ApplicationScheme;
+	options.Authority = identityUrl.ToString();
+	options.SignedOutRedirectUri = callBackUrl.ToString();
+	options.RequireHttpsMetadata = false;
+});
 
 var app = builder.Build();
 
@@ -53,9 +60,6 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
