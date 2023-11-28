@@ -16,7 +16,12 @@ public static class AuthInstaller
 
 		services
 			.AddAuthentication(IdentityConstants.ApplicationScheme)
-			.AddIdentityCookies();
+			.AddCookie(IdentityConstants.ApplicationScheme, o =>
+			{
+				o.LoginPath = "/login";
+			});
+
+		services.AddAuthorization();
 
 		return services;
 	}
