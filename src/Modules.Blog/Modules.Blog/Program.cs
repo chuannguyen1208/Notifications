@@ -8,8 +8,6 @@ using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.HttpOverrides;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +21,7 @@ builder.Services.AddSwaggerTool()
 
 builder.Services.AddBlogsUseCases();
 
-builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5223"));
+builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5003"));
 
 builder.Services.AddAuthentication(options =>
 	{
