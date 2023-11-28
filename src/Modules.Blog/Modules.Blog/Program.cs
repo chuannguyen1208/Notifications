@@ -7,6 +7,8 @@ using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,15 @@ builder.Services.AddSwaggerTool()
 builder.Services.AddBlogsUseCases();
 
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5223"));
+
+builder.Services.AddAuthentication(options =>
+	{
+		options.DefaultScheme = IdentityConstants.ApplicationScheme;
+		options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+	})
+	.AddIdentityCookies();
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -44,6 +55,9 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
