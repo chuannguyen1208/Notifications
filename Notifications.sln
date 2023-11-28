@@ -38,8 +38,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Blog.Client", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{FA4F2E67-46A4-4E3D-B63A-6611DA303F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthService", "src\OAuthService\OAuthService.csproj", "{8E7DEC53-A20D-479A-8178-9761CBB3B2B1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,10 +72,6 @@ Global
 		{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E7DEC53-A20D-479A-8178-9761CBB3B2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E7DEC53-A20D-479A-8178-9761CBB3B2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E7DEC53-A20D-479A-8178-9761CBB3B2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E7DEC53-A20D-479A-8178-9761CBB3B2B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,7 +84,6 @@ Global
 		{68A3221E-2AE0-4D1D-981B-43C7541E7A6C} = {604F5363-D4C4-402D-95A5-39D9F5B5F897}
 		{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2} = {604F5363-D4C4-402D-95A5-39D9F5B5F897}
 		{FA4F2E67-46A4-4E3D-B63A-6611DA303F6E} = {B4EE123E-9F96-479D-8881-68D28511D8E3}
-		{8E7DEC53-A20D-479A-8178-9761CBB3B2B1} = {FA4F2E67-46A4-4E3D-B63A-6611DA303F6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46F68595-1350-4924-A453-FD3937FDD8F8}
