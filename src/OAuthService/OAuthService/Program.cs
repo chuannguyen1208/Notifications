@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using OAuthService.Client.Pages;
 using OAuthService.Client.Services;
 using OAuthService.Components;
@@ -14,6 +15,17 @@ builder.Services.AddAuthTool()
 	.AddSwaggerTool();
 
 builder.Services.AddHttpClient<AuthService>(client => client.BaseAddress = new Uri("http://localhost:5002"));
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+	.AddCookie(IdentityConstants.ApplicationScheme, o =>
+	{
+		o.LoginPath = "/login";
+	});
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddReverseProxy()
+	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
@@ -40,5 +52,7 @@ app.MapRazorComponents<App>()
 	.AddAdditionalAssemblies(typeof(Login).Assembly);
 
 app.MapAuthTool();
+
+app.MapReverseProxy();
 
 app.Run();

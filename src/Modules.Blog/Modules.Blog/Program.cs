@@ -7,6 +7,7 @@ using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,14 @@ builder.Services
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
 builder.Services.AddBlogsUseCases();
-builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5003"));
+builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5001"));
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+	.AddCookie(IdentityConstants.ApplicationScheme);
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -41,6 +49,9 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

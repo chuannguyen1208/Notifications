@@ -1,6 +1,5 @@
 ﻿@page "/admin"
 @inject BlogsService BlogsService
-@attribute [Authorize]
 
 <ul class="list-group">
     <li class="list-group-item border-0">
@@ -34,6 +33,7 @@
 
 @code {
     IEnumerable<BlogDto> blogs = [];
+    private string User = null!;
 
     protected override async Task OnInitializedAsync()
     {
