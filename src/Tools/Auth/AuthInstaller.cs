@@ -14,18 +14,6 @@ public static class AuthInstaller
 			.AddEntityFrameworkStores<AuthDbContext>()
 			.AddApiEndpoints();
 
-		services.AddAuthentication(options =>
-			{
-				options.DefaultScheme = IdentityConstants.ApplicationScheme;
-				options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-			})
-			.AddCookie(IdentityConstants.ApplicationScheme, o =>
-			{
-				o.LoginPath = "/login";
-			});
-
-		services.AddAuthorization();
-
 		return services;
 	}
 
