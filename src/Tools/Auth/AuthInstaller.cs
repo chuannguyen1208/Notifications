@@ -14,11 +14,12 @@ public static class AuthInstaller
 			.AddEntityFrameworkStores<AuthDbContext>()
 			.AddApiEndpoints();
 
-		services.AddAuthentication(IdentityConstants.ApplicationScheme)
-			.AddCookie(IdentityConstants.ApplicationScheme, o =>
+		services.AddAuthentication(options =>
 			{
-				o.LoginPath = "/login";
-			});
+				options.DefaultScheme = IdentityConstants.ApplicationScheme;
+				options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+			})
+			.AddIdentityCookies();
 
 		services.AddAuthorization();
 
