@@ -19,7 +19,10 @@ public static class AuthInstaller
 				options.DefaultScheme = IdentityConstants.ApplicationScheme;
 				options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
 			})
-			.AddIdentityCookies();
+			.AddCookie(IdentityConstants.ApplicationScheme, o =>
+			{
+				o.LoginPath = "/login";
+			});
 
 		services.AddAuthorization();
 

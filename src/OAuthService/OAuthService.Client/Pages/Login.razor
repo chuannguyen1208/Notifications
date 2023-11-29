@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @rendermode InteractiveWebAssembly
 @inject AuthService AuthService
+@inject NavigationManager Nav
 
 <h3>Login</h3>
 
@@ -9,7 +10,7 @@
         @if (isSubmitSuccessful is bool success)
         {
             <div class="alert @(success ? "alert-success" : "alert-error")" role="alert">
-                Registration @(success ? "successful" : "failed")!
+                Login @(success ? "successful" : "failed")!
             </div>
         }
 
@@ -26,7 +27,7 @@
                 <ValidationMessage For="@(() => Model.Password)" />
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </EditForm>
     </div>
 </div>
@@ -36,6 +37,9 @@
     [SupplyParameterFromForm]
     public LoginModel? Model { get; set; }
 
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
     private bool? isSubmitSuccessful;
 
     protected override void OnInitialized() => Model ??= new();
@@ -43,6 +47,10 @@
     private async Task Submit()
     {
         isSubmitSuccessful = await AuthService.LoginAsync(Model!.Email!, Model.Password!);
+        if (isSubmitSuccessful is bool success && success && !string.IsNullOrEmpty(ReturnUrl))
+        {
+            Nav.NavigateTo(ReturnUrl);
+        }
     }
 
     public class LoginModel
