@@ -7,11 +7,12 @@ using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
+using System.Text.Json;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services
 	.AddRazorComponents()
 	.AddInteractiveServerComponents()
@@ -24,16 +25,29 @@ builder.Services
 builder.Services.AddBlogsUseCases();
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5001"));
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-	.AddCookie(IdentityConstants.ApplicationScheme);
-
-builder.Services.AddAuthorization();
-
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
 app.UsePathBase("/blogs");
+
+app.Use(async (context, next) =>
+{
+	var userX = context.Request.Headers["x-user-json"];
+
+	if (userX.Count > 0)
+	{
+		var dictionary = JsonSerializer.Deserialize<Dictionary<string, string>>(userX.ToString()) ?? [];
+		var userClaims = dictionary.Select(v => new Claim(v.Key, v.Value));
+		var claimPrinciple = new ClaimsPrincipal(new ClaimsIdentity(userClaims, IdentityConstants.ApplicationScheme));
+
+		context.User = claimPrinciple;
+	}
+
+	await next.Invoke();
+});
+
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,11 +61,6 @@ else
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

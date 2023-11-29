@@ -1,0 +1,23 @@
+﻿@page "/user"
+@attribute [Authorize]
+
+<h3>User</h3>
+
+<div>IsAuthenticated: @IsAuthenticated</div>
+<div>Username: @Username</div>
+
+@code {
+    [CascadingParameter]
+    public HttpContext? Context { get; set; }
+
+    public bool IsAuthenticated;
+    public string? Username;
+
+    protected override void OnInitialized()
+    {
+        var user = Context?.User;
+
+        IsAuthenticated = user?.Identity?.IsAuthenticated ?? false;
+        Username = user?.Identity?.Name;
+    }
+}

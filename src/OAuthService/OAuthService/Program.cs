@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using OAuthService.Client.Pages;
 using OAuthService.Client.Services;
 using OAuthService.Components;
+using System.Text.Json;
 using Tools.Auth;
 using Tools.Swagger;
+using Yarp.ReverseProxy.Transforms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,30 @@ builder.Services.AddAuthTool()
 
 builder.Services.AddHttpClient<AuthService>(client => client.BaseAddress = new Uri("http://localhost:5002"));
 
+
+builder.Services.AddReverseProxy()
+	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
+	.AddTransforms(tbc =>
+	{
+		if (!string.IsNullOrEmpty(tbc.Route.AuthorizationPolicy))
+		{
+			tbc.AddRequestTransform(rtc =>
+			{
+				var userDic = rtc.HttpContext.User.Claims.Aggregate(
+					new Dictionary<string, string>(),
+					(d, c) =>
+					{
+						d[c.Type] = c.Value;
+						return d;
+					}
+				);
+
+				rtc.ProxyRequest.Headers.Add("x-user-json", JsonSerializer.Serialize(userDic));
+				return ValueTask.CompletedTask;
+			});
+		}
+	});
+
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	.AddCookie(IdentityConstants.ApplicationScheme, o =>
 	{
@@ -23,9 +49,6 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	});
 
 builder.Services.AddAuthorization();
-
-builder.Services.AddReverseProxy()
-	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
