@@ -1,0 +1,46 @@
+﻿@namespace MyComps
+
+@using System.Text.Json.Serialization
+@implements IDisposable
+@inject IJSRuntime JS
+
+<div id="editor"></div>
+
+@code {
+    [Parameter] public EventCallback EditorInitialized { get; set; } = default!;
+    [Parameter] public EventCallback<string> OnTextChanged { get; set; }
+    [Parameter] public string Value { get; set; } = string.Empty;
+
+    IJSObjectReference quill = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            quill = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/RichEditor.razor.js");
+            await quill.InvokeVoidAsync("BlazorQuill.init", "#editor");
+            await quill.InvokeVoidAsync("BlazorQuill.listen", DotNetObjectReference.Create<MyComps.RichEditor>(this));
+            await EditorInitialized.InvokeAsync();
+            await SetQuillContent();
+        }
+    }
+
+    async Task SetQuillContent()
+    {
+        await quill.InvokeVoidAsync("BlazorQuill.setContent", Value);
+    }
+
+    [JSInvokable]
+    public async Task EditorCallback(string text)
+    {
+        await OnTextChanged.InvokeAsync(text);
+    }
+
+    public void Dispose()
+    {
+        if (quill is not null)
+        {
+            quill.DisposeAsync();
+        }
+    }
+}

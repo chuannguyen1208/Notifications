@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}hostweb
     build:
       context: .
-      dockerfile: WebHost/Dockerfile
+      dockerfile: src/WebHost/Dockerfile
     depends_on: 
       - sqlserver
     networks:

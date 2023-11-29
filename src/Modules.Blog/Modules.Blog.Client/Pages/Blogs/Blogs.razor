@@ -1,0 +1,57 @@
+﻿@page "/"
+@inject BlogsService BlogsService
+
+@if (loading)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <div class="row">
+        @foreach (var blog in blogs)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="img/cover.jpg" class="card-img-top" alt="@blog.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@blog.Title</h5>
+                        <p class="card-text">@blog.Description</p>
+                        <div class="d-flex justify-content-between align-items-center card-bottom">
+                            <span>
+                                <i class="bi-alarm me-1"></i>
+                                Author
+                            </span>
+                            <span>
+                                <i class="bi bi-calendar2 me-1"></i>
+                                @(blog.Created.ToString("MMM d,yyyy"))
+                            </span>
+                            <button type="button" class="btn btn-link btn-sm text-decoration-none">
+                                Read
+                                <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    IEnumerable<BlogDto> blogs = Enumerable.Empty<BlogDto>();
+    bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var res = await BlogsService.GetBlogsAsync();
+            if (res is not null)
+                blogs = res;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+}
