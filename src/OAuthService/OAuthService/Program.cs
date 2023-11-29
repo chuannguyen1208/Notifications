@@ -1,5 +1,8 @@
 using OAuthService.Client.Pages;
+using OAuthService.Client.Services;
 using OAuthService.Components;
+using Tools.Auth;
+using Tools.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,12 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
 	.AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddAuthTool()
+	.AddSwaggerTool();
+
+builder.Services.AddHttpClient<AuthService>(client => client.BaseAddress = new Uri("http://localhost:5002"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 	app.UseWebAssemblyDebugging();
+	app.UseSwaggerTool();
 }
 else
 {
@@ -28,6 +37,8 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
 	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(Counter).Assembly);
+	.AddAdditionalAssemblies(typeof(Login).Assembly);
+
+app.MapAuthTool();
 
 app.Run();

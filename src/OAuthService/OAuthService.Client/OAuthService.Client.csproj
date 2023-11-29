@@ -1,15 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
-    <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+		<StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+		<PackageReference Include="Microsoft.Extensions.Http" />
+	</ItemGroup>
 
 </Project>
