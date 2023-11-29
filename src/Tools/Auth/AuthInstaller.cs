@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Tools.Auth;
 public static class AuthInstaller
 {
-	public static IServiceCollection AddAuth(this IServiceCollection services)
+	public static IServiceCollection AddAuthTool(this IServiceCollection services)
 	{
 		services.AddDbContext<AuthDbContext>(o => o.UseSqlite("DataSource=app.db"));
 
@@ -14,8 +14,7 @@ public static class AuthInstaller
 			.AddEntityFrameworkStores<AuthDbContext>()
 			.AddApiEndpoints();
 
-		services
-			.AddAuthentication(IdentityConstants.ApplicationScheme)
+		services.AddAuthentication(IdentityConstants.ApplicationScheme)
 			.AddCookie(IdentityConstants.ApplicationScheme, o =>
 			{
 				o.LoginPath = "/login";
@@ -26,7 +25,7 @@ public static class AuthInstaller
 		return services;
 	}
 
-	public static IEndpointRouteBuilder MapAuth(this IEndpointRouteBuilder app)
+	public static IEndpointRouteBuilder MapAuthTool(this IEndpointRouteBuilder app)
 	{
 		app.MapIdentityApi<IdentityUser>();
 		return app;
