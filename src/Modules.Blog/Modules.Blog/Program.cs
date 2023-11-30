@@ -22,7 +22,7 @@ builder.Services
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
 builder.Services.AddBlogsUseCases();
-builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri("http://localhost:5001"));
+builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
 
 builder.Services.AddHttpContextAccessor();
 
