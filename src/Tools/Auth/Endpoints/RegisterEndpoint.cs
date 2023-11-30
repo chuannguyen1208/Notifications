@@ -12,7 +12,7 @@ internal class RegisterEndpoint : IEndpointsDefinition
 {
 	public static void ConfigureEndpoints(IEndpointRouteBuilder app)
 	{
-		app.MapPost("/register", PostRegister).WithTags("Identity");
+		app.MapPost("/register", PostRegister).WithTags("Identity").RequireAuthorization();
 	}
 
 	private static async Task<IResult> PostRegister([FromBody] RegisterModel model, [FromServices] IServiceProvider sp)
