@@ -8,7 +8,7 @@ using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
 using Microsoft.AspNetCore.Identity;
-using Modules.Blog;
+using Modules.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
