@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,5 +22,12 @@ public static class AuthInstaller
 	{
 		app.MapIdentityApi<IdentityUser>();
 		return app;
+	}
+
+	public static void MigrateAuthTool(this IApplicationBuilder app)
+	{
+		using var scope = app.ApplicationServices.CreateScope();
+		var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+		dbContext.Database.Migrate();
 	}
 }

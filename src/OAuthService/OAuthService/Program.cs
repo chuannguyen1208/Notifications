@@ -75,6 +75,7 @@ app.MapRazorComponents<App>()
 	.AddAdditionalAssemblies(typeof(Login).Assembly);
 
 app.MapAuthTool();
+app.MigrateAuthTool();
 
 app.MapReverseProxy();
 
