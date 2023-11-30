@@ -7,9 +7,8 @@ using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
-using System.Text.Json;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Modules.Blog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,26 +26,14 @@ builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new 
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+	.AddScheme<ReverseProxyAuthenticationOptions, ReverseProxyAuthenticationHandler>(IdentityConstants.ApplicationScheme, o => { });
+
 var app = builder.Build();
 
 app.UsePathBase("/blogs");
 
-app.Use(async (context, next) =>
-{
-	var userX = context.Request.Headers["x-user-json"];
-
-	if (userX.Count > 0)
-	{
-		var dictionary = JsonSerializer.Deserialize<Dictionary<string, string>>(userX.ToString()) ?? [];
-		var userClaims = dictionary.Select(v => new Claim(v.Key, v.Value));
-		var claimPrinciple = new ClaimsPrincipal(new ClaimsIdentity(userClaims, IdentityConstants.ApplicationScheme));
-
-		context.User = claimPrinciple;
-	}
-
-	await next.Invoke();
-});
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
