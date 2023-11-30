@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using OAuthService;
 using OAuthService.Client.Pages;
 using OAuthService.Client.Services;
 using OAuthService.Components;
@@ -74,9 +75,11 @@ app.MapRazorComponents<App>()
 	.AddInteractiveWebAssemblyRenderMode()
 	.AddAdditionalAssemblies(typeof(Login).Assembly);
 
-app.MapAuthTool();
 app.MigrateAuthTool();
+app.MapAuthEndpoints();
 
 app.MapReverseProxy();
+
+await AuthDbSeeder.SeedData(app.Services);
 
 app.Run();
