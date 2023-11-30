@@ -10,7 +10,7 @@ public static class AuthInstaller
 {
 	public static IServiceCollection AddAuthTool(this IServiceCollection services)
 	{
-		services.AddDbContext<AuthDbContext>(o => o.UseSqlite("DataSource=app.db"));
+		services.AddDbContext<AuthDbContext>(o => o.UseSqlite("DataSource=./db/app.db"));
 
 		services.AddIdentityCore<IdentityUser>(o =>
 		{
