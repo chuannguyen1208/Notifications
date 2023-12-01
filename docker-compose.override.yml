@@ -6,7 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
       - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://modules.blog
-      - IdentityUser__Password=@Chuant123
+      - IdentityUser__Password=Root!234
     ports:
       - "5000:80"
     volumes:
