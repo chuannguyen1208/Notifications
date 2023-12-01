@@ -4,15 +4,19 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Modules.Shared\Modules.Shared.csproj" />
     <ProjectReference Include="..\..\Tools\Tools.csproj" />
     <ProjectReference Include="..\Modules.Blog.Client\Modules.Blog.Client.csproj" />
     <ProjectReference Include="..\Modules.Blog.Shared\Modules.Blog.Shared.csproj" />
     <ProjectReference Include="..\Modules.Blog.UseCases\Modules.Blog.UseCases.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
 </Project>

@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService", "src\OAuthSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Client", "src\OAuthService\OAuthService.Client\OAuthService.Client.csproj", "{3D68BEE2-D98E-406D-AD82-8ABE67E5B43E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Shared", "src\Modules.Shared\Modules.Shared.csproj", "{C0040A2D-7E88-40ED-88D8-633D8B21E871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{3D68BEE2-D98E-406D-AD82-8ABE67E5B43E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D68BEE2-D98E-406D-AD82-8ABE67E5B43E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D68BEE2-D98E-406D-AD82-8ABE67E5B43E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0040A2D-7E88-40ED-88D8-633D8B21E871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0040A2D-7E88-40ED-88D8-633D8B21E871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0040A2D-7E88-40ED-88D8-633D8B21E871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0040A2D-7E88-40ED-88D8-633D8B21E871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{5AFDCEDD-6A03-4EA3-A971-0F9F895922B1} = {604F5363-D4C4-402D-95A5-39D9F5B5F897}
 		{68A3221E-2AE0-4D1D-981B-43C7541E7A6C} = {604F5363-D4C4-402D-95A5-39D9F5B5F897}
 		{B5F0B2AA-5951-4B59-96C8-249ED0DB70D2} = {604F5363-D4C4-402D-95A5-39D9F5B5F897}
+		{C0040A2D-7E88-40ED-88D8-633D8B21E871} = {B4EE123E-9F96-479D-8881-68D28511D8E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {46F68595-1350-4924-A453-FD3937FDD8F8}

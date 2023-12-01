@@ -3,10 +3,6 @@
 [*.cs]
 indent_style = tab
 
-
-dotnet_diagnostic.IDE0055.severity = none
-dotnet_diagnostic.CA1852.severity = none
-dotnet_diagnostic.CA1305.severity = none
 csharp_indent_labels = one_less_than_current
 csharp_using_directive_placement = outside_namespace:silent
 csharp_prefer_simple_using_statement = true:suggestion
@@ -33,8 +29,7 @@ csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_prefer_local_over_anonymous_function = true:suggestion
 csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_prefer_static_local_function = true:suggestion
-dotnet_diagnostic.IDE0060.severity = none
-dotnet_diagnostic.IDE0005.severity = warning
+
 
 [*.{cs,vb}]
 #### Naming styles ####
@@ -98,16 +93,21 @@ dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_code_quality_unused_parameters = all:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
-dotnet_diagnostic.CA1051.severity = suggestion
 dotnet_style_collection_initializer = true:suggestion
+
+# diagnose
+dotnet_diagnostic.IDE0060.severity = none
+dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0055.severity = none
+dotnet_diagnostic.CA1852.severity = none
+dotnet_diagnostic.CA1305.severity = none
+dotnet_diagnostic.CA1051.severity = suggestion
 dotnet_diagnostic.S2094.severity = none
 dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.S6580.severity = none
 dotnet_diagnostic.S1075.severity = none
-
 dotnet_diagnostic.CA1859.severity = none
 dotnet_diagnostic.CA1848.severity = none
 dotnet_diagnostic.S1481.severity = none
 dotnet_diagnostic.S125.severity = none
 dotnet_diagnostic.S2737.severity = none
-

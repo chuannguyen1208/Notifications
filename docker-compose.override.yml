@@ -3,20 +3,31 @@ version: '3.4'
 services:
   host.web:
     environment:
-      - ASPNETCORE_ENVIRONMENT=DockerCompose
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=80
+      - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://modules.blog
+      - IdentityUser__Password=Root!234
     ports:
-      - "8081:80"
+      - "5000:80"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-      - ./.containers/logs:/logs
-  sqlserver:
+      - ./.containers/db:/app/db
+  modules.blog:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - BaseUrl=http://localhost
     volumes:
-      - ./.containers/mssql:/var/opt/mssql/data
-  elasticsearch:
-    volumes:
-      - ./.containers/elasticsearch-data:/usr/share/elasticsearch/data
-  kibana:
-    volumes:
-      - ./.containers/kibana:/usr/share/kibana/data
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  # sqlserver:
+  #   volumes:
+  #     - ./.containers/mssql:/var/opt/mssql/data
+  # elasticsearch:
+  #   volumes:
+  #     - ./.containers/elasticsearch-data:/usr/share/elasticsearch/data
+  # kibana:
+  #   volumes:
+  #     - ./.containers/kibana:/usr/share/kibana/data

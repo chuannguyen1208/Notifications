@@ -2,62 +2,69 @@ version: '3.4'
 
 services:
   host.web:
-    image: ${DOCKER_REGISTRY-}hostweb
+    image: ${DOCKER_REGISTRY-}oauth.host
     build:
       context: .
-      dockerfile: src/WebHost/Dockerfile
-    depends_on: 
-      - sqlserver
+      dockerfile: src/OAuthService/OAuthService/Dockerfile
     networks:
       - my_network
     container_name: host
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-    container_name: mssql
-    environment:
-      - SA_PASSWORD=Pass@word
-      - ACCEPT_EULA=Y
-    ports:
-      - "1433:1433"
+  modules.blog:
+    image: ${DOCKER_REGISTRY-}module.blog
+    build:
+      context: .
+      dockerfile: src/Modules.Blog/Modules.Blog/Dockerfile
     networks:
       - my_network
+    container_name: modules.blog
 
-  rabbitmq:
-    image: "rabbitmq:3-management"
-    container_name: rabbitmq
-    hostname: rmq
-    ports:
-      - "5672:5672"  # RabbitMQ default port
-      - "15672:15672"  # RabbitMQ management UI port
-    environment:
-      RABBITMQ_DEFAULT_USER: rabbitmq
-      RABBITMQ_DEFAULT_PASS: rabbitmq
-    networks:
-      - my_network
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2017-latest
+  #   container_name: mssql
+  #   environment:
+  #     - SA_PASSWORD=Pass@word
+  #     - ACCEPT_EULA=Y
+  #   ports:
+  #     - "1433:1433"
+  #   networks:
+  #     - my_network
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-    ports:
-      - "9200:9200"
-    networks:
-      - my_network
+  # rabbitmq:
+  #   image: "rabbitmq:3-management"
+  #   container_name: rabbitmq
+  #   hostname: rmq
+  #   ports:
+  #     - "5672:5672"  # RabbitMQ default port
+  #     - "15672:15672"  # RabbitMQ management UI port
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: rabbitmq
+  #     RABBITMQ_DEFAULT_PASS: rabbitmq
+  #   networks:
+  #     - my_network
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+  #   container_name: elasticsearch
+  #   environment:
+  #     - discovery.type=single-node
+  #     - xpack.security.enabled=false
+  #   ports:
+  #     - "9200:9200"
+  #   networks:
+  #     - my_network
   
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.11.1
-    container_name: kibana
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    ports:
-      - "5601:5601"
-    networks:
-      - my_network
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.11.1
+  #   container_name: kibana
+  #   environment:
+  #     - ELASTICSEARCH_URL=http://elasticsearch:9200
+  #   ports:
+  #     - "5601:5601"
+  #   networks:
+  #     - my_network
+  #   depends_on:
+  #     - elasticsearch
 
 networks:
   my_network:
