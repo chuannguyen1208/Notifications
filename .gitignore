@@ -815,3 +815,4 @@ fabric.properties
 
 *.db
 *.db-*
+/docker-compose-demo.yml
