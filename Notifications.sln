@@ -38,7 +38,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService", "src\OAuthSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Client", "src\OAuthService\OAuthService.Client\OAuthService.Client.csproj", "{3D68BEE2-D98E-406D-AD82-8ABE67E5B43E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Shared", "src\Modules.Shared\Modules.Shared.csproj", "{C0040A2D-7E88-40ED-88D8-633D8B21E871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modules.Shared", "src\Modules.Shared\Modules.Shared.csproj", "{C0040A2D-7E88-40ED-88D8-633D8B21E871}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,6 @@
 		<DockerTargetOS>Linux</DockerTargetOS>
 		<DockerPublishLocally>False</DockerPublishLocally>
 		<ProjectGuid>cbe5dd95-514e-42ab-a181-b12a92c871c5</ProjectGuid>
-		<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
 		<DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
 		<DockerServiceName>host.web</DockerServiceName>
 		<DockerComposeProjectName>notification</DockerComposeProjectName>

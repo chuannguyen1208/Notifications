@@ -31,7 +31,7 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 
 var app = builder.Build();
 
-app.UsePathBase("/blogs");
+app.UsePathBase("/b");
 
 app.UseAuthentication();
 app.UseAuthorization();
