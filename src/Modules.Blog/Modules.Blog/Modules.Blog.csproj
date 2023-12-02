@@ -19,8 +19,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
 </Project>
