@@ -6,9 +6,7 @@
         var toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['blockquote', 'code-block'],
-            ['link', 'image'],
-            [{ 'color': [] }, { 'background': [] }]
+            ['blockquote', 'code-block', 'image']
         ];
 
         this.quill = new Quill(element, {

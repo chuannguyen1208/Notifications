@@ -1,0 +1,55 @@
+﻿@inherits LayoutComponentBase
+@attribute [Authorize]
+@inject IJSRuntime JS
+@inject NavigationManager Nav
+
+<style>
+    .navbar-brand .subtitle {
+        font-size: 80%;
+        opacity: 0.7;
+    }
+</style>
+
+<div class="container">
+    <header class="px-auto">
+        <nav class="navbar navbar-expand-sm navbar-light">
+            <div class="collapse navbar-collapse justify-content-start fs-5" id="navbarNav">
+                <ul class="navbar-nav py-2">
+                    <li class="nav-item">
+                        <a class="btn" href="adm">
+                            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.09091 3H4C3.44771 3 3 3.44772 3 4V18C3 18.5523 3.44772 19 4 19H7.09091C7.64319 19 8.09091 18.5523 8.09091 18V4C8.09091 3.44771 7.64319 3 7.09091 3ZM4 1C2.34315 1 1 2.34315 1 4V18C1 19.6569 2.34315 21 4 21H7.09091C8.74776 21 10.0909 19.6569 10.0909 18V4C10.0909 2.34315 8.74776 1 7.09091 1H4ZM18 3H14.9091C14.3568 3 13.9091 3.44772 13.9091 4V7.09091C13.9091 7.64319 14.3568 8.09091 14.9091 8.09091H18C18.5523 8.09091 19 7.64319 19 7.09091V4C19 3.44771 18.5523 3 18 3ZM14.9091 1C13.2522 1 11.9091 2.34315 11.9091 4V7.09091C11.9091 8.74776 13.2522 10.0909 14.9091 10.0909H18C19.6569 10.0909 21 8.74776 21 7.09091V4C21 2.34315 19.6569 1 18 1H14.9091ZM14.9091 13.9091H18C18.5523 13.9091 19 14.3568 19 14.9091V18C19 18.5523 18.5523 19 18 19H14.9091C14.3568 19 13.9091 18.5523 13.9091 18V14.9091C13.9091 14.3568 14.3568 13.9091 14.9091 13.9091ZM11.9091 14.9091C11.9091 13.2522 13.2522 11.9091 14.9091 11.9091H18C19.6569 11.9091 21 13.2522 21 14.9091V18C21 19.6569 19.6569 21 18 21H14.9091C13.2522 21 11.9091 19.6569 11.9091 18V14.9091Z"></path></svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn" href="adm/blogs">
+                            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 2H16C17.6569 2 19 3.34315 19 5V17C19 18.6569 17.6569 20 16 20H6C4.34315 20 3 18.6569 3 17V5C3 3.34315 4.34315 2 6 2ZM1 5C1 2.23858 3.23858 0 6 0H16C18.7614 0 21 2.23858 21 5V17C21 19.7614 18.7614 22 16 22H6C3.23858 22 1 19.7614 1 17V5ZM10.8639 16.919C10.3868 16.6435 10.2233 16.0334 10.4988 15.5563L15.1573 7.48748C15.4328 7.01034 16.0429 6.84686 16.52 7.12234C16.9972 7.39782 17.1606 8.00793 16.8852 8.48507L12.2266 16.5539C11.9512 17.031 11.3411 17.1945 10.8639 16.919ZM7 7.00002H13.1306L11.9759 9.00002H7C6.44771 9.00002 6 8.55231 6 8.00002C6 7.44774 6.44771 7.00002 7 7.00002ZM7 11H10.8212L9.6665 13H7C6.44771 13 6 12.5523 6 12C6 11.4477 6.44771 11 7 11ZM8.5118 15H7C6.44771 15 6 15.4477 6 16C6 16.5523 6.44771 17 7 17H8.48621C8.15216 16.4081 8.13077 15.66 8.49519 15.0288L8.5118 15Z"></path></svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn" href="adm/pages">
+                            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 2.23858 3.23858 0 6 0H16L21 5V17C21 19.7614 18.7614 22 16 22H6C3.23858 22 1 19.7614 1 17V5ZM19 6H16C15.4477 6 15 5.55228 15 5V2H6C4.34315 2 3 3.34315 3 5V17C3 18.6569 4.34315 20 6 20H16C17.6569 20 19 18.6569 19 17V6ZM7 9C6.44772 9 6 8.55228 6 8C6 7.44772 6.44772 7 7 7H11C11.5523 7 12 7.44772 12 8C12 8.55228 11.5523 9 11 9H7ZM6 12C6 12.5523 6.44772 13 7 13H15C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11H7C6.44772 11 6 11.4477 6 12ZM6 16C6 16.5523 6.44772 17 7 17H15C15.5523 17 16 16.5523 16 16C16 15.4477 15.5523 15 15 15H7C6.44772 15 6 15.4477 6 16Z"></path></svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn" href="adm/drive">
+                            <svg class="menu-icon" fill="currentColor" width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M17 5C19.2091 5 21 6.79086 21 9V17C21 19.2091 19.2091 21 17 21H5C2.79086 21 1 19.2091 1 17V5C1 2.79086 2.79086 1 5 1H10C10.3788 1 10.725 1.214 10.8944 1.55279L12.618 5H17ZM3 17V5C3 3.89543 3.89542 3 5 3H9.38196L11.1056 6.44721C11.275 6.786 11.6212 7 12 7H17C18.1046 7 19 7.89543 19 9V17C19 18.1046 18.1046 19 17 19H5C3.89542 19 3 18.1046 3 17Z"></path></svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end fs-5">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link position-relative ms-2 nav-link-login" href="/b/adm">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    @Body
+</div>

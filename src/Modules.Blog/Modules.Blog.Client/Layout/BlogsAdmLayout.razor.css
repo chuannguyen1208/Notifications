@@ -1,0 +1,11 @@
+﻿.nav-link-login::after {
+    content: "";
+    width: 1px;
+    height: 1rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    background-color: rgba(0,0,0,.1);
+    display: block;
+}
