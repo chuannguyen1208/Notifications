@@ -1,7 +1,7 @@
 ﻿export class BlazorQuill {
     static quill;
 
-    static init(element, reviewElement) {
+    static init(element) {
         console.log('quill init...');
         var toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],

@@ -1,6 +1,9 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
 
 <PageTitle>Home</PageTitle>
+
 <p />
 <h5>About Me</h5>
 <div class="row">
@@ -34,32 +37,7 @@
                         <h5 class="card-title">Blogs Engine</h5>
                         <p class="card-text">What's so special about this blog, you ask? Well, absolutely nothing! </p>
                         <p class="card-text"><small class="text-muted">Last updated 1 min ago</small></p>
-                        <a href="/b" class="btn btn-light btn-sm">Read <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="/imgs/blogsAdm.png" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Blogs Engine Admin</h5>
-                        <p class="card-text">Blogs admin setting page.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 1 min ago</small></p>
-                        <div class="d-flex justify-content-between">
-                            <a href="/b/adm" class="btn btn-light btn-sm">Read <i class="bi bi-arrow-right"></i></a>
-                            <button type="button" class="btn btn-sm text-primary" style="opacity: 1" disabled>
-                                <i class="bi bi-fingerprint"></i>
-                                Secured
-                            </button>
-                        </div>
+                        <button class="btn btn-light btn-sm" @onclick="@(() => Nav.NavigateTo("/b"))">Read <i class="bi bi-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
