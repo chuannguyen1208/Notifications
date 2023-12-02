@@ -1,5 +1,4 @@
-﻿import * as EasyMDE from 'easymde';
-
+﻿import EasyMDE from 'easymde';
 const
     editorIcon_heading = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3 2H5V7.25L11 7.25V2H13V14H11V8.75L5 8.75V14H3V2Z" /></svg>`
     , editorIcon_bold = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 2H8.5C10.433 2 12 3.567 12 5.5C12 6.25657 11.7599 6.95707 11.3519 7.52949C12.3416 8.14781 13 9.24701 13 10.5C13 12.433 11.433 14 9.5 14H4V2ZM6 4H8.5C9.32843 4 10 4.67157 10 5.5C10 6.32843 9.32843 7 8.5 7H6V4ZM6 9V12H9.5C10.3284 12 11 11.3284 11 10.5C11 9.67157 10.3284 9 9.5 9H6Z" /></svg>`
@@ -168,14 +167,33 @@ const miniToolbar = [
     editorToolbar_preview,
 ];
 
-let easymde;
-
-export function loadEditor(textareaElement, toolbar) {
-    let selectedToolbar = fullToolbar;
-    if (toolbar == "miniToolbar") {
-        selectedToolbar = miniToolbar;
+function insertYoutube(editor) {
+    let id = prompt("Please enter video ID", "");
+    if (id !== null && id !== "") {
+        let tag = `<iframe width="700" height="400" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        let cm = editor.codemirror;
+        cm.replaceSelection(tag);
     }
-
-    let easyMDE = new EasyMDE();
-    easymde = easyMDE;
 }
+
+async function insertImage(editor) {
+}
+
+function toggleSideBySide() {
+    EasyMDE.toggleSideBySide(easymde);
+    // Wait for the screen to complete
+    setTimeout(() => hljs.highlightElement(easymde.gui.sideBySide), 1000);
+}
+
+export class EditorMDE {
+    static easymde;
+
+    static loadEditor(textareaElement, toolbar) {
+        let easyMDE = new EasyMDE({
+            element: textareaElement
+        });
+        this.easymde = easyMDE;
+    }
+}
+
+window.EditorMDE = EditorMDE;
