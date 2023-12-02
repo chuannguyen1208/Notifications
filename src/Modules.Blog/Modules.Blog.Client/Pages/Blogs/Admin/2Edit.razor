@@ -1,5 +1,7 @@
 ﻿@page "/adm/blog/{Id:int}"
-@rendermode InteractiveWebAssembly
+@using Modules.Blog.Client.Layout
+@using Modules.Blog.Shared
+@rendermode InteractiveServer
 @layout BlogsAdmLayout
 @inject BlogsService BlogsService
 @inject NavigationManager Navigation
@@ -29,15 +31,13 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <div class="form-group">
-            <MyComps.RichEditor OnTextChanged="@(val => Blog.Content = val)"></MyComps.RichEditor>
+            <MyComps.EasyMdeEditor></MyComps.EasyMdeEditor>
         </div>
     </div>
 </div>
 
-
 @code {
     [Parameter] public int? Id { get; set; }
-
     EditBlogDto Blog = new()
     {
         Title = ""

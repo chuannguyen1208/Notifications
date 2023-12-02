@@ -1,0 +1,18 @@
+﻿@namespace MyComps
+@inject IJSRuntime JS
+
+<textarea @ref="TextArea" placeholder="Type here..." style="display: none"></textarea>
+
+@code {
+    ElementReference TextArea;
+    IJSObjectReference editor = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            editor = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/EasyMdeEditor.razor.js");
+            await editor.InvokeVoidAsync("EasyMdeEditor.init", TextArea);
+        }
+    }
+}
