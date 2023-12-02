@@ -1,18 +1,16 @@
 ﻿@namespace MyComps
-@inject IJSRuntime JS
+@inject EditorInterop EditorInterop
 
-<textarea @ref="TextArea" placeholder="Type here..." style="display: none"></textarea>
+<textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
 
 @code {
-    ElementReference TextArea;
-    IJSObjectReference editor = null!;
+    ElementReference _textareaElement;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            editor = await JS.InvokeAsync<IJSObjectReference>("import", "./Components/EasyMdeEditor.razor.js");
-            await editor.InvokeVoidAsync("EasyMdeEditor.init", TextArea);
+            await EditorInterop.LoadEditorAsync(_textareaElement);
         }
     }
 }

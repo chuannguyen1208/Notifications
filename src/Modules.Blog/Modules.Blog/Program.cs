@@ -9,6 +9,7 @@ using Modules.Blog.Client.Services;
 using Modules.Blog.UseCases;
 using Microsoft.AspNetCore.Identity;
 using Modules.Shared;
+using Modules.Blog.Client.Services.Interop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,9 @@ builder.Services
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
 builder.Services.AddBlogsUseCases();
+
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
+builder.Services.AddScoped<EditorInterop>();
 
 builder.Services.AddHttpContextAccessor();
 
