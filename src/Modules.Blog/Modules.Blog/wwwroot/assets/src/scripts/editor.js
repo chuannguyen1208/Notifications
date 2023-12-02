@@ -189,10 +189,30 @@ export class EditorMDE {
     static easymde;
 
     static loadEditor(textareaElement, toolbar) {
-        let easyMDE = new EasyMDE({
-            element: textareaElement
+        let selectedToolbar = fullToolbar;
+        if (toolbar == "miniToolbar") {
+            selectedToolbar = miniToolbar;
+        }
+        this.easymde = new EasyMDE({
+            element: textareaElement,
+            autoDownloadFontAwesome: false,
+            indentWithTabs: false,
+            status: false,
+            height: "200px",
+            minHeight: "200px",
+            parsingConfig: {
+                allowAtxHeaderWithoutSpace: true,
+                underscoresBreakWords: true
+            },
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true
+            },
+            toolbar: selectedToolbar,
+            insertTexts: {
+                horizontalRule: ["", "\n---\n"]
+            }
         });
-        this.easymde = easyMDE;
     }
 }
 
