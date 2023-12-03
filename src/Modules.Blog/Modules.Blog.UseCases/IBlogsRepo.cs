@@ -5,6 +5,7 @@ public interface IBlogsRepo
 {
 	Task<IEnumerable<BlogEntity>> GetBlogs();
 	Task CreateBlog(BlogEntity blog);
+	Task<BlogEntity?> GetBlogAsync(int id);
 }
 
 internal class BlogsRepoSample : IBlogsRepo
@@ -40,6 +41,12 @@ internal class BlogsRepoSample : IBlogsRepo
 		blog.Created = DateTimeOffset.UtcNow;
 		_blogEntities.Add(blog);
 		await Task.CompletedTask;
+	}
+
+	public async Task<BlogEntity?> GetBlogAsync(int id)
+	{
+		var blog = _blogEntities.Find(s => s.Id == id);
+		return await Task.FromResult(blog);
 	}
 
 	public async Task<IEnumerable<BlogEntity>> GetBlogs()

@@ -4,10 +4,6 @@
     background-position: center;
 }
 
-.bg-transparent-gray {
-    background-color: rgba(128, 128, 128, 0.5);
-}
-
 .cs-input-sample {
     background: transparent;
 }

@@ -10,7 +10,8 @@ public class BlogEndpoints : IEndpointsDefinition
 {
 	public static void ConfigureEndpoints(IEndpointRouteBuilder app)
 	{
-		app.MapGet("/api/blogs", (IMediator mediator) => mediator.Send(new GetBlogsQuery())).WithOpenApi();
+		app.MapGet("/api/blogs", (IMediator mediator) => mediator.Send(new GetBlogsQuery()));
+		app.MapGet("/api/blogs/{id}", (int id, IMediator mediator) => mediator.Send(new GetBlogQuery(id)));
 		app.MapPost("/api/blogs", (EditBlogCommand model, IMediator mediator) =>
 		{
 			return mediator.Send(model);
