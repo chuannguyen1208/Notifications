@@ -2,15 +2,24 @@
 @inject EditorInterop EditorInterop
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
+<InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
 
 @code {
     ElementReference _textareaElement;
+    InputFile _uploadFileElement = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await EditorInterop.LoadEditorAsync(_textareaElement);
+            await EditorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
+
         }
+    }
+
+    protected async Task LoadImageFiles(InputFileChangeEventArgs args)
+    {
+        var element = _uploadFileElement.Element;
+        await EditorInterop.WriteFrontFileAsync(element);
     }
 }

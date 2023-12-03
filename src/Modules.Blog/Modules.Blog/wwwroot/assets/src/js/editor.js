@@ -164,6 +164,8 @@ const miniToolbar = [
     editorToolbar_image,
     editorToolbar_video,
     "|",
+    editorToolbar_code,
+    "|",
     editorToolbar_preview,
 ];
 
@@ -177,6 +179,7 @@ function insertYoutube(editor) {
 }
 
 async function insertImage(editor) {
+    _inputFileElement.click();
 }
 
 function toggleSideBySide() {
@@ -185,35 +188,66 @@ function toggleSideBySide() {
     setTimeout(() => hljs.highlightElement(easymde.gui.sideBySide), 1000);
 }
 
-export class EditorMDE {
-    static easymde;
+let easymde;
+let _inputFileElement;
 
-    static loadEditor(textareaElement, toolbar) {
-        let selectedToolbar = fullToolbar;
-        if (toolbar == "miniToolbar") {
-            selectedToolbar = miniToolbar;
-        }
-        this.easymde = new EasyMDE({
-            element: textareaElement,
-            autoDownloadFontAwesome: false,
-            indentWithTabs: false,
-            status: false,
-            height: "200px",
-            minHeight: "200px",
-            parsingConfig: {
-                allowAtxHeaderWithoutSpace: true,
-                underscoresBreakWords: true
-            },
-            renderingConfig: {
-                singleLineBreaks: false,
-                codeSyntaxHighlighting: true
-            },
-            toolbar: selectedToolbar,
-            insertTexts: {
-                horizontalRule: ["", "\n---\n"]
-            }
-        });
+function loadEditor(textareaElement, inputFileElement, toolbar) {
+    _inputFileElement = inputFileElement;
+
+    let selectedToolbar = fullToolbar;
+
+    if (toolbar == "miniToolbar") {
+        selectedToolbar = miniToolbar;
     }
+
+    this.easymde = new EasyMDE({
+        element: textareaElement,
+        autoDownloadFontAwesome: false,
+        indentWithTabs: false,
+        status: false,
+        height: "200px",
+        minHeight: "200px",
+        parsingConfig: {
+            allowAtxHeaderWithoutSpace: true,
+            underscoresBreakWords: true
+        },
+        renderingConfig: {
+            singleLineBreaks: false,
+            codeSyntaxHighlighting: true
+        },
+        toolbar: selectedToolbar,
+        insertTexts: {
+            horizontalRule: ["", "\n---\n"]
+        }
+    });
 }
 
-window.EditorMDE = EditorMDE;
+function getEditorValue() {
+    return this.easymde.getValue();
+}
+
+function setEditorValue(txt) {
+    this.easymde.value(txt
+        .replace(/&#xA;/g, '\r\n')
+        .replace(/&#xD;/g, '')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"'));
+}
+
+function writeFrontFile(inputElement) {
+    const file = inputElement.files[0];
+    const fileName = file.name;
+    const url = URL.createObjectURL(file);
+    let output = '\r\n![' + fileName + '](' + url + ')';
+    let codemirror = this.easymde.codemirror;
+    codemirror.selection;
+    codemirror.replaceSelection(output);
+}
+
+window.EditorMDE = {
+    loadEditor,
+    getEditorValue,
+    setEditorValue,
+    writeFrontFile
+};

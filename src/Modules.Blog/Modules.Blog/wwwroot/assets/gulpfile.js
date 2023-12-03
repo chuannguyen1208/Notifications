@@ -1,28 +1,25 @@
 ﻿var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 const webpack = require('webpack-stream');
+const del = require('del');
 
-var paths = {
-    scripts: {
-        src: 'src/scripts/*.js',
-        dest: 'js'
-    }
-};
+gulp.task("clean", async function () {
+    await del(['js']);
+});
 
-function scripts() {
-    return gulp.src(paths.scripts.src, { sourcemaps: true })
-        .pipe(webpack())
-        .pipe(uglify())
-        .pipe(gulp.dest(paths.scripts.dest));
-}
+gulp.task("editorjs", function () {
+    return webpack({
+        entry: './src/js/editor.js',
+        output: {
+            filename: 'editor.js'
+        }
+    })
+    .pipe(uglify())
+    .pipe(gulp.dest('js'));
+});
 
-function watch() {
-    gulp.watch(paths.scripts.src, scripts);
-}
+gulp.task("watch", function () {
+    gulp.watch("src/js/editor.js", gulp.series('editorjs'));
+});
 
-var build = gulp.series(scripts);
-
-exports.scripts = scripts;
-exports.watch = watch;
-
-exports.default = build;
+gulp.task('default', gulp.series('clean', 'editorjs'));
