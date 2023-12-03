@@ -55,7 +55,8 @@
     {
         var content = await _editor.GetContentAsync();
         Blog.Content = content;
-        Console.WriteLine(Blog.Content);
+        await BlogsService.EditBlogAsync(Blog);
+        Navigation.NavigateTo("adm");
     }
 
     async Task Publish()
