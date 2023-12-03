@@ -4,7 +4,7 @@ using Modules.Blog.UseCases.Entity;
 
 namespace Modules.Blog.UseCases.Blogs.Commands;
 
-public record EditBlogCommand(int Id, string Title, string Description) : IRequest
+public record EditBlogCommand(int Id, string Title, string Description, string Content) : IRequest
 {
 	public class EditBlogCommandProfile : Profile
 	{

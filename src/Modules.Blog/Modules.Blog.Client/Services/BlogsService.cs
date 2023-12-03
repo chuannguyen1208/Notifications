@@ -8,16 +8,16 @@ public class BlogsService(HttpClient httpClient)
 	private const string BaseUrl = "api/blogs";
 	public async Task<IEnumerable<BlogDto>> GetBlogsAsync()
 	{
-		return await httpClient.GetFromJsonAsync<IEnumerable<BlogDto>>(BaseUrl) ?? Enumerable.Empty<BlogDto>();
+		return await httpClient.GetFromJsonAsync<IEnumerable<BlogDto>>(BaseUrl).ConfigureAwait(false) ?? Enumerable.Empty<BlogDto>();
 	}
 
 	public async Task<BlogDto> GetBlogAsync(int id)
 	{
-		return await httpClient.GetFromJsonAsync<BlogDto>($"{BaseUrl}/{id}") ?? throw new FileNotFoundException();
+		return await httpClient.GetFromJsonAsync<BlogDto>($"{BaseUrl}/{id}").ConfigureAwait(false) ?? throw new FileNotFoundException();
 	}
 
 	public async Task EditBlogAsync(EditBlogDto editBlogDto)
 	{
-		await httpClient.PostAsJsonAsync(BaseUrl, editBlogDto);
+		await httpClient.PostAsJsonAsync(BaseUrl, editBlogDto).ConfigureAwait(false);
 	}
 }

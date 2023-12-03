@@ -8,6 +8,8 @@
 }
 
 const setInnerHtml = (element, html) => {
+    console.log('setHtml', element);
+    console.log('html', html);
     element.innerHTML = html;
 }
 
