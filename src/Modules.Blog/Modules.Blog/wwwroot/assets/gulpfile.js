@@ -22,6 +22,21 @@ gulp.task("editorjs", function () {
     .pipe(gulp.dest('js'));
 });
 
+gulp.task('watchEditorjs', function () {
+    gulp.watch('./src/js/editor.js', gulp.series('editorjs'));
+});
+
+gulp.task("commonjs", function () {
+    return webpack({
+        entry: './src/js/common.js',
+        output: {
+            filename: 'common.js'
+        }
+    })
+    .pipe(uglify())
+    .pipe(gulp.dest('js'));
+});
+
 gulp.task('sass', function () {
     return gulp.src('./src/css/*.scss')
         .pipe(gulpSass().on('error', gulpSass.logError))

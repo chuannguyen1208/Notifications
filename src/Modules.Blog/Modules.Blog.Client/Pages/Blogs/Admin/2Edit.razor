@@ -1,12 +1,12 @@
 ﻿@page "/adm/blog/{Id:int}"
 @using Modules.Blog.Client.Layout
 @using Modules.Blog.Shared
-@rendermode InteractiveServer
+@rendermode InteractiveWebAssembly
 @layout BlogsAdmLayout
 @inject BlogsService BlogsService
 @inject NavigationManager Navigation
 
-<PageTitle>@(Id.HasValue ? "Edit" : "New blog")</PageTitle>
+<PageTitle>@(Id > 0 ? "Edit" : "New blog")</PageTitle>
 
 <div class="px-3 background-image ">
     <div class="row d-flex align-items-center py-3">
@@ -31,13 +31,16 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <div class="form-group">
-            <MyComps.EasyMdeEditor></MyComps.EasyMdeEditor>
+            <MyComps.EasyMdeEditor @ref="_editor"></MyComps.EasyMdeEditor>
         </div>
     </div>
 </div>
 
 @code {
     [Parameter] public int? Id { get; set; }
+    MyComps.EasyMdeEditor _editor = default!;
+
+
     EditBlogDto Blog = new()
     {
         Title = ""
@@ -50,8 +53,9 @@
 
     async Task Save()
     {
-        await BlogsService.EditBlogAsync(Blog);
-        Navigation.NavigateTo("adm");
+        var content = await _editor.GetContentAsync();
+        Blog.Content = content;
+        Console.WriteLine(Blog.Content);
     }
 
     async Task Publish()

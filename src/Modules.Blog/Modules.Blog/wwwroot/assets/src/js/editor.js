@@ -205,8 +205,7 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
         autoDownloadFontAwesome: false,
         indentWithTabs: false,
         status: false,
-        height: "200px",
-        minHeight: "200px",
+        minHeight: "500px",
         parsingConfig: {
             allowAtxHeaderWithoutSpace: true,
             underscoresBreakWords: true
@@ -225,7 +224,7 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
 }
 
 function getEditorValue() {
-    return this.easymde.getValue();
+    return this.easymde.value();
 }
 
 function setEditorValue(txt) {
@@ -241,6 +240,7 @@ function writeFrontFile(inputElement) {
     const file = inputElement.files[0];
     const fileName = file.name;
     const url = URL.createObjectURL(file);
+
     let output = '\r\n![' + fileName + '](' + url + ')';
     let codemirror = this.easymde.codemirror;
     codemirror.selection;

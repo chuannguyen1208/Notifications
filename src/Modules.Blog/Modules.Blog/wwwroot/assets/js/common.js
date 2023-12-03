@@ -1,0 +1,1 @@
+window.convertBlobURLToBase64=async a=>{var o,a=await(await fetch(a)).blob();return o=a,await new Promise((a,e)=>{const r=new FileReader;r.onload=()=>a(r.result),r.error=a=>e(a),r.readAsDataURL(o)})};

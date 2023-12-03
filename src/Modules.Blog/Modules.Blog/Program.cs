@@ -26,6 +26,7 @@ builder.Services.AddBlogsUseCases();
 
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
 builder.Services.AddScoped<EditorInterop>();
+builder.Services.AddScoped<CommonInterop>();
 
 builder.Services.AddHttpContextAccessor();
 
