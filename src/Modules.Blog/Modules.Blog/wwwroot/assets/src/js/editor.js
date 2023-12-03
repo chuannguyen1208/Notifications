@@ -220,6 +220,8 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
             horizontalRule: ["", "\n---\n"]
         }
     });
+
+    toggleToolbarTooltip();
 }
 
 function getEditorValue() {
@@ -243,6 +245,18 @@ function writeFrontFile(inputElement) {
     let codemirror = this.easymde.codemirror;
     codemirror.selection;
     codemirror.replaceSelection(output);
+}
+
+function toggleToolbarTooltip() {
+    const buttons = document.querySelectorAll('.editor-toolbar button');
+    for (var i = 0; i < buttons.length; i++) {
+        const tooltipEle = document.createElement('span');
+        tooltipEle.className = 'tooltip-content';
+        tooltipEle.innerText = buttons[i].getAttribute('title');
+
+        buttons[i].classList.add('tooltip-container');
+        buttons[i].appendChild(tooltipEle);
+    }
 }
 
 window.EditorMDE = {
