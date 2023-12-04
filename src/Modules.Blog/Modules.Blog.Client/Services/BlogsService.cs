@@ -13,7 +13,12 @@ public class BlogsService(HttpClient httpClient)
 
 	public async Task<BlogDto> GetBlogAsync(int id)
 	{
-		return await httpClient.GetFromJsonAsync<BlogDto>($"{BaseUrl}/{id}").ConfigureAwait(false) ?? throw new FileNotFoundException();
+		return await httpClient.GetFromJsonAsync<BlogDto>($"{BaseUrl}/{id}").ConfigureAwait(false) ?? throw new KeyNotFoundException();
+	}
+
+	public async Task<DashboardSummary> GetDashboardSummaryAsync()
+	{
+		return await httpClient.GetFromJsonAsync<DashboardSummary>($"{BaseUrl}/summary").ConfigureAwait(false) ?? new DashboardSummary();
 	}
 
 	public async Task EditBlogAsync(EditBlogDto editBlogDto)
