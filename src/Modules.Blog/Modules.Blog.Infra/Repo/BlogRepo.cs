@@ -3,20 +3,23 @@ using Modules.Blog.UseCases.Entity;
 
 namespace Modules.Blog.Infra.Repo;
 
-internal class BlogRepo : IBlogsRepo
+internal class BlogRepo(BlogDbContext context) : IBlogsRepo
 {
-	public Task CreateBlog(BlogEntity blog)
+	public async Task CreateBlog(BlogEntity blog)
 	{
-		throw new NotImplementedException();
+		context.Add(blog);
+		await context.SaveChangesAsync();
 	}
 
-	public Task<BlogEntity?> GetBlogAsync(int id)
+	public async Task<BlogEntity?> GetBlogAsync(int id)
 	{
-		throw new NotImplementedException();
+		var entity = context.Blogs.Find(id);
+		return await Task.FromResult(entity);
 	}
 
-	public Task<IEnumerable<BlogEntity>> GetBlogs()
+	public async Task<IEnumerable<BlogEntity>> GetBlogs()
 	{
-		throw new NotImplementedException();
+		var entities = context.Blogs.AsEnumerable();
+		return await Task.FromResult(entities);
 	}
 }
