@@ -225,7 +225,7 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
 
 function getEditorValue() {
     const value = this.easymde.value();
-    return this.easymde.markdown(value);
+    return value;
 }
 
 function setEditorValue(txt) {
