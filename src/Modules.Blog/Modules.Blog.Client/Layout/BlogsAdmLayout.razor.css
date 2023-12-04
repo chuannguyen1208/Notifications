@@ -1,0 +1,28 @@
+﻿.nav-link-login::after {
+    content: "";
+    width: 1px;
+    height: 1rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    background-color: rgba(0,0,0,.1);
+    display: block;
+}
+
+.nav-item ::deep a.active {
+    background-color: rgba(255,255,255,0.37);
+    color: #7241fd;
+}
+
+    .nav-item ::deep a.active::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        bottom: 0;
+        left: 25%;
+        background-color: #7241fd;
+        transform-origin: bottom right;
+        transition: transform 0.3s ease;
+    }

@@ -1,0 +1,63 @@
+﻿@page "/adm/blogs"
+@rendermode InteractiveServer
+@layout BlogsAdmLayout
+@inject BlogsService _blogsService
+
+<ul class="list-group">
+    <li class="list-group-item border-0">
+        <div class="d-flex align-items-center">
+            <input class="form-check-input" type="checkbox">
+            <a class="btn btn-primary btn-md rounded-pill px-4 py-2 ms-3 btn-new-post" href="admin/blog/0">New Post</a>
+        </div>
+    </li>
+    @foreach (var blog in blogs)
+    {
+        <li class="list-group-item border-0">
+            <div class="form-check d-flex align-items-center justify-content-between">
+                <div style="width: 200px">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label ms-3">
+                        @blog.Title
+                    </label>
+                </div>
+
+                <div>
+                    <span>@blog.Created.ToString("MMM d, yyyy")</span>
+                </div>
+                
+                <div class="ms-3">
+                    <MyComps.Tooltip TooltipContent="Published">
+                        <i class="bi bi-check-lg fs-5"></i>
+                    </MyComps.Tooltip>
+                </div>
+
+                <div class="ms-3">
+                    <MyComps.Tooltip TooltipContent="Delete">
+                        <i class="bi bi-trash cursor-pointer fs-5" @onclick="@(async () => await DeleteBlog(blog.Id))"></i>
+                    </MyComps.Tooltip>
+                </div>
+            </div>
+        </li>
+    }
+
+</ul>
+
+@code {
+    IEnumerable<BlogDto> blogs = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBlogs();
+    }
+
+    async Task DeleteBlog(int id)
+    {
+        await _blogsService.DeleteAsync(id);
+        await GetBlogs();
+    }
+
+    async Task GetBlogs()
+    {
+        blogs = await _blogsService.GetBlogsAsync();
+    }
+}

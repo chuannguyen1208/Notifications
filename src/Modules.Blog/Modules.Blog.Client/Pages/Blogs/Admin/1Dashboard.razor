@@ -1,0 +1,57 @@
+﻿@page "/adm"
+@layout BlogsAdmLayout
+@inject BlogsService _blogsSvc
+
+<PageTitle>Dashboard - Blogs</PageTitle>
+
+@if (summary is null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-6">
+                    <a class="btn btn-light w-100 p-5" href="adm/blog/0">
+                        <i class="bi bi-pencil-fill fs-4"></i>
+                        <span class="ms-2">New post</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a class="btn btn-light w-100 p-5">
+                        <i class="bi bi-plus-lg fs-4"></i>
+                        <span class="ms-2">New page</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <a class="btn btn-light w-100 p-5" href="adm/blogs">
+                        <span class="ms-2">@summary.TotalPosts posts</span>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-light w-100 p-5">
+                        <span class="ms-2">@summary.TotalPages pages</span>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-light w-100 p-5">
+                        <span class="ms-2">@summary.TotalSubcribers subcribers</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private DashboardSummary summary = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        summary = await _blogsSvc.GetDashboardSummaryAsync();
+    }
+}

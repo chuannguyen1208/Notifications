@@ -1,0 +1,12 @@
+﻿.bg-img {
+    background-image: url('img/cover.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.detail-content {
+    width: 80%;
+    min-height: 600px;
+    background: #fff;
+    position: absolute;
+    top: -65px;
+}

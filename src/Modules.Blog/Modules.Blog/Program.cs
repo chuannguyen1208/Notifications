@@ -6,9 +6,10 @@ using Modules.Blog.UseCases.Blogs.Queries;
 using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
 using Modules.Blog.Client.Services;
-using Modules.Blog.UseCases;
 using Microsoft.AspNetCore.Identity;
 using Modules.Shared;
+using Modules.Blog.Client.Services.Interop;
+using Modules.Blog.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,13 +22,16 @@ builder.Services
 	.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
-builder.Services.AddBlogsUseCases();
 builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
+builder.Services.AddScoped<EditorInterop>();
+builder.Services.AddScoped<CommonInterop>();
 
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	.AddScheme<ReverseProxyAuthenticationOptions, ReverseProxyAuthenticationHandler>(IdentityConstants.ApplicationScheme, o => { });
+
+builder.Services.AddModuleBlogs();
 
 var app = builder.Build();
 
@@ -56,6 +60,8 @@ app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
 	.AddAdditionalAssemblies(typeof(BlogsService).Assembly);
+
+app.MigrateModuleBlogs();
 
 app.UseEndpoints<BlogEndpoints>();
 

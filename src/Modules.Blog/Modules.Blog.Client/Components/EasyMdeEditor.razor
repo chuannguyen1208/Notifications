@@ -1,0 +1,51 @@
+﻿@namespace MyComps
+@using Modules.Blog.Client.Services.Helper
+@using System.Text
+@using System.Text.RegularExpressions
+@inject EditorInterop _editorInterop
+@inject CommonInterop _commonInterop
+
+<textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
+<InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
+
+@code {
+    ElementReference _textareaElement;
+    InputFile _uploadFileElement = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
+
+        }
+    }
+
+    protected async Task LoadImageFiles(InputFileChangeEventArgs args)
+    {
+        var element = _uploadFileElement.Element;
+        await _editorInterop.WriteFrontFileAsync(element);
+    }
+
+    public async Task<string> GetContentAsync()
+    {
+        var content = await _editorInterop.GetEditorValueAsync();
+        var imgsMatches = StringHelper.MarkdownImgBlobGeneratedRegex().Matches(content);
+
+        if (imgsMatches.Count > 0)
+        {
+            var contentStringBuilder = new StringBuilder(content);
+
+            foreach (Match match in imgsMatches)
+            {
+                var blobUrl = match.Groups[1].Value;
+                var base64 = await _commonInterop.BlogUrlToBase64(blobUrl).ConfigureAwait(false); // only work on WebAssembly mode
+                contentStringBuilder.Replace(blobUrl, base64);
+            }
+
+            content = contentStringBuilder.ToString();
+        }
+
+        return content;
+    }
+}

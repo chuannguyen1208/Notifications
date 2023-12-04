@@ -1,0 +1,13 @@
+﻿@namespace MyComps
+
+<div class="container px-0">
+    <div class="tooltip-container">
+        @ChildContent
+        <div class="tooltip-content">@TooltipContent</div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string TooltipContent { get; set; } = "Tooltip";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
