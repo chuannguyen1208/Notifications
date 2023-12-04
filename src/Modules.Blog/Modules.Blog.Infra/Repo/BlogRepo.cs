@@ -11,6 +11,16 @@ internal class BlogRepo(BlogDbContext context) : IBlogsRepo
 		await context.SaveChangesAsync();
 	}
 
+	public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+	{
+		var entity = context.Blogs.Find(id);
+		if (entity != null)
+		{
+			context.Blogs.Remove(entity);
+			await context.SaveChangesAsync(cancellationToken);
+		}
+	}
+
 	public async Task<BlogEntity?> GetBlogAsync(int id)
 	{
 		var entity = context.Blogs.Find(id);

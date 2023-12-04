@@ -15,5 +15,6 @@ public class BlogEndpoints : IEndpointsDefinition
 		app.MapGet("/api/blogs/summary", (IMediator m) => m.Send(new GetDashboardSummaryQuery()));
 
 		app.MapPost("/api/blogs", (EditBlogCommand model, IMediator mediator) => mediator.Send(model));
+		app.MapDelete("/api/blogs/{id}", (int id, IMediator m) => m.Send(new DeleteBlogCommand(id)));
 	}
 }

@@ -25,4 +25,9 @@ public class BlogsService(HttpClient httpClient)
 	{
 		await httpClient.PostAsJsonAsync(BaseUrl, editBlogDto).ConfigureAwait(false);
 	}
+
+	public async Task DeleteAsync(int id)
+	{
+		await httpClient.DeleteAsync($"{BaseUrl}/{id}").ConfigureAwait(false);
+	}
 }

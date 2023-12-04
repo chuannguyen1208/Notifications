@@ -7,4 +7,5 @@ public interface IBlogsRepo
 	Task<IEnumerable<BlogEntity>> GetBlogs();
 	Task<BlogEntity?> GetBlogAsync(int id);
 	Task CreateBlog(BlogEntity blog);
+	Task DeleteAsync(int id, CancellationToken cancellationToken);
 }
