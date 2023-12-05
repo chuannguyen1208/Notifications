@@ -10,6 +10,12 @@
     cursor: pointer;
 }
 
+.editor-toolbar {
+    button.tooltip-container {
+        width: auto !important;
+    }
+}
+
 .fs-12 {
     font-size: 12px;
 }

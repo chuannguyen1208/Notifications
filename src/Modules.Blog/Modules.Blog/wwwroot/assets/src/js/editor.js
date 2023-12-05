@@ -165,6 +165,7 @@ const miniToolbar = [
     editorToolbar_video,
     "|",
     editorToolbar_code,
+    editorToolbar_table,
     "|",
     editorToolbar_preview,
 ];
