@@ -1,6 +1,4 @@
 ﻿@page "/{Id:int}"
-@rendermode InteractiveServer
-@inject CommonInterop _commonJs
 @inject BlogsService _blogsService
 
 <PageTitle>@(_blog?.Title)</PageTitle>
@@ -26,7 +24,7 @@
                 <div></div>
             </div>
             <div class="mt-3">@_blog.Description</div>
-            <div class="mt-5 editor-preview" @ref="_contentElement"></div>
+            <div class="mt-5">@((MarkupString)_blog.ContentHtml)</div>
         </div>
     }
 </div>
@@ -35,9 +33,7 @@
     [Parameter] public int Id { get; set; }
 
     private bool loading = true;
-    private bool loadingContent = true;
     private BlogDto _blog = null!;
-    private ElementReference _contentElement = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,15 +44,6 @@
         finally
         {
             loading = false;
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (_blog is not null && loadingContent)
-        {
-            await _commonJs.SetInnerHtml(_contentElement, _blog.Content);
-            loadingContent = false;
         }
     }
 }
