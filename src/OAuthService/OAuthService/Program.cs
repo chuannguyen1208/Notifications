@@ -20,7 +20,6 @@ builder.Services.AddAuthTool()
 
 builder.Services.AddHttpClient<AuthService>(client => client.BaseAddress = new Uri("http://localhost:5002"));
 
-
 builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
 	.AddTransforms(tbc =>
