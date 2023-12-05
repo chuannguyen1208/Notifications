@@ -32,6 +32,7 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	.AddScheme<ReverseProxyAuthenticationOptions, ReverseProxyAuthenticationHandler>(IdentityConstants.ApplicationScheme, o => { });
 
 builder.Services.AddModuleBlogs();
+builder.Services.AddCascadingAuthenticationState();
 
 var app = builder.Build();
 
