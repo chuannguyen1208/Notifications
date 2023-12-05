@@ -25,23 +25,20 @@ builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
 	.AddTransforms(tbc =>
 	{
-		if (!string.IsNullOrEmpty(tbc.Route.AuthorizationPolicy))
+		tbc.AddRequestTransform(rtc =>
 		{
-			tbc.AddRequestTransform(rtc =>
-			{
-				var userDic = rtc.HttpContext.User.Claims.Aggregate(
-					new Dictionary<string, string>(),
-					(d, c) =>
-					{
-						d[c.Type] = c.Value;
-						return d;
-					}
-				);
+			var userDic = rtc.HttpContext.User.Claims.Aggregate(
+				new Dictionary<string, string>(),
+				(d, c) =>
+				{
+					d[c.Type] = c.Value;
+					return d;
+				}
+			);
 
-				rtc.ProxyRequest.Headers.Add("x-user-json", JsonSerializer.Serialize(userDic));
-				return ValueTask.CompletedTask;
-			});
-		}
+			rtc.ProxyRequest.Headers.Add("x-user-json", JsonSerializer.Serialize(userDic));
+			return ValueTask.CompletedTask;
+		});
 	});
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
