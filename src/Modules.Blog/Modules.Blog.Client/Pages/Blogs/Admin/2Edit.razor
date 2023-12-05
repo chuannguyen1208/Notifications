@@ -1,9 +1,7 @@
 ﻿@page "/adm/blog/{Id:int}"
-@using Modules.Blog.Client.Layout
-@using Modules.Blog.Shared
 @rendermode InteractiveWebAssembly
 @layout BlogsAdmLayout
-@inject BlogsService BlogsService
+@inject IBlogsService BlogsService
 @inject NavigationManager Navigation
 
 <PageTitle>@(Id > 0 ? "Edit" : "New blog")</PageTitle>

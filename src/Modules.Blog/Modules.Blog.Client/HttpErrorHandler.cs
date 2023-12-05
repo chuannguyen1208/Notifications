@@ -3,7 +3,7 @@ using Modules.Blog.Client.Services.Interop;
 
 namespace Modules.Blog.Client;
 
-public class HttpErrorHandler(CommonInterop commonInterop) : DelegatingHandler
+internal class HttpErrorHandler(CommonInterop commonInterop) : DelegatingHandler
 {
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
