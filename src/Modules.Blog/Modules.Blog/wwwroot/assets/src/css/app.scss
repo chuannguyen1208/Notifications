@@ -13,6 +13,9 @@
 .editor-toolbar {
     button.tooltip-container {
         width: auto !important;
+        min-width: 40px;
+        min-height: 40px;
+        margin-right: 4px;
     }
 }
 
