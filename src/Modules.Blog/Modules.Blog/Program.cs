@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Modules.Shared;
 using Modules.Blog.Client.Services.Interop;
 using Modules.Blog.Infra;
+using Modules.Blog.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,10 @@ builder.Services
 	.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
-builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
+builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!))
+	.AddHttpMessageHandler<HttpErrorHandler>();
+
+builder.Services.AddTransient<HttpErrorHandler>();
 builder.Services.AddScoped<EditorInterop>();
 builder.Services.AddScoped<CommonInterop>();
 
