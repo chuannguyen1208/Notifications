@@ -17,7 +17,6 @@
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
-            await _commonInterop.ToastError("Toast err.");
         }
     }
 

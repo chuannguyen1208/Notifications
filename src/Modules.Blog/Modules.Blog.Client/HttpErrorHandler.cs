@@ -1,7 +1,9 @@
 ﻿
+using Modules.Blog.Client.Services.Interop;
+
 namespace Modules.Blog.Client;
 
-public class HttpErrorHandler : DelegatingHandler
+public class HttpErrorHandler(CommonInterop commonInterop) : DelegatingHandler
 {
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
@@ -9,9 +11,16 @@ public class HttpErrorHandler : DelegatingHandler
 
 		if (!response.IsSuccessStatusCode)
 		{
-			var content = await response.Content.ReadAsStringAsync(cancellationToken);
-			Console.WriteLine($"Request is not successful with error: " + content);
-			throw new HttpRequestException(content); 
+			string content = (int)response.StatusCode switch
+			{
+				401 => "Unauthorized",
+				403 => "Forbidden",
+				500 => "Internal server error",
+				_ => await response.Content.ReadAsStringAsync(cancellationToken)
+			};
+
+			await commonInterop.ToastError(content);
+			throw new HttpRequestException(content);
 		}
 
 		return response;
