@@ -1,18 +1,27 @@
-﻿using System.Net.Http.Json;
+﻿using OAuthService.Shared;
+using System.Net.Http.Json;
 
 namespace OAuthService.Client.Services;
 
-public class AuthService(HttpClient client)
+public interface IAuthService
 {
-	public async Task<bool> RegisterAsync(string email, string password)
+	Task<bool> RegisterAsync(RegisterModel model);
+	Task<bool> LoginAsync(LoginModel model);
+}
+
+internal class AuthService(IHttpClientFactory httpClientFactory) : IAuthService
+{
+	public async Task<bool> LoginAsync(LoginModel model)
 	{
-		var response = await client.PostAsJsonAsync("/register", new { username = email , password });
-		return response.IsSuccessStatusCode;
+		using var client = httpClientFactory.CreateClient("default");
+		var res = await client.PostAsJsonAsync("/login", model);
+		return res.IsSuccessStatusCode;
 	}
 
-	public async Task<bool> LoginAsync(string email, string password)
+	public async Task<bool> RegisterAsync(RegisterModel model)
 	{
-		var res = await client.PostAsJsonAsync("/login?useCookies=true", new { username = email, password });
-		return res.IsSuccessStatusCode;
+		using var client = httpClientFactory.CreateClient("default");
+		var response = await client.PostAsJsonAsync("/register", model);
+		return response.IsSuccessStatusCode;
 	}
 }
