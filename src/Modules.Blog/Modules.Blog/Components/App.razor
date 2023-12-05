@@ -19,6 +19,18 @@
 
 <body>
     <Routes />
+    <div class="position-fixed p-3" style="z-index: 11; top: 15px; right: 15px;">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
     <script src="_framework/blazor.web.js"></script>
     <script src="assets/js/editor.js"></script>
     <script src="assets/js/common.js"></script>

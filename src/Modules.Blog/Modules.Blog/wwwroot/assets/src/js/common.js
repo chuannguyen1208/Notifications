@@ -8,9 +8,22 @@
 }
 
 const setInnerHtml = (element, html) => {
-    console.log('setHtml', element);
-    console.log('html', html);
     element.innerHTML = html;
+}
+
+const toast = (text, textColorClass = "") => {
+    const toast = document.querySelector(".toast");
+    if (toast) {
+
+        const body = toast.querySelector(".toast-body");
+        body.innerHTML = text;
+        body.classList.add(textColorClass);
+
+        toast.classList.add('show');
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 3000);
+    }
 }
 
 window.convertBlobURLToBase64 = async (url) => {
@@ -21,3 +34,6 @@ window.convertBlobURLToBase64 = async (url) => {
 };
 
 window.setInnerHtml = setInnerHtml;
+window.toast = text => toast(text);
+window.toastSuccess = text => toast(text, "text-success");
+window.toastError = text => toast(text, "text-danger");

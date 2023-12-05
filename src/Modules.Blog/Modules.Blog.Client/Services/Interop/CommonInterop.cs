@@ -14,4 +14,19 @@ public class CommonInterop(IJSRuntime Js)
 	{
 		return await Js.InvokeAsync<string>("setInnerHtml", element, html);
 	}
+
+	public async Task Toast(string text)
+	{
+		await Js.InvokeVoidAsync("toast", text);
+	}
+
+	public async Task ToastSuccess(string text)
+	{
+		await Js.InvokeVoidAsync("toastSuccess", text);
+	}
+
+	public async Task ToastError(string text)
+	{
+		await Js.InvokeVoidAsync("toastError", text);
+	}
 }
