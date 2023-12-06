@@ -1,32 +1,35 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 
 namespace Modules.Blog.Client.Services.Interop;
 
-public class CommonInterop(IJSRuntime Js)
+public class CommonInterop
 {
+	private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+
+	public CommonInterop(IJSRuntime js)
+	{
+		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/src/js/common.js").AsTask());
+	}
+
 	public async Task<string> BlogUrlToBase64(string blobUrl)
 	{
-		return await Js.InvokeAsync<string>("convertBlobURLToBase64", blobUrl);
+		var module = await moduleTask.Value;
+		return await module.InvokeAsync<string>("convertBlobURLToBase64", blobUrl);
 	}
 
-	public async Task<string> SetInnerHtml(ElementReference element, string html)
+	public async Task Toast(string text, string type = "", int closeAfterMs = 2000)
 	{
-		return await Js.InvokeAsync<string>("setInnerHtml", element, html);
-	}
-
-	public async Task Toast(string text)
-	{
-		await Js.InvokeVoidAsync("toast", text);
+		var module = await moduleTask.Value;
+		await module.InvokeVoidAsync("toast", text, type, closeAfterMs);
 	}
 
 	public async Task ToastSuccess(string text)
 	{
-		await Js.InvokeVoidAsync("toastSuccess", text);
+		await Toast(text, "text-success");
 	}
 
 	public async Task ToastError(string text)
 	{
-		await Js.InvokeVoidAsync("toastError", text);
+		await Toast(text, "text-danger");
 	}
 }
