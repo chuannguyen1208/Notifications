@@ -1,30 +1,58 @@
 ﻿const gulp = require('gulp');
 const uglify = require('gulp-uglify');
-const webpack = require('webpack-stream');
 const del = require('del');
 const dartSass = require('sass');
 const gulpSass = require('gulp-sass')(dartSass);
 const concat = require('gulp-concat');
 const cleanCss = require('gulp-clean-css');
-const babel = require('gulp-babel');
+
+const plumber = require('gulp-plumber');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+
+const rollupStream = require('@rollup/stream');
+const commonjs = require('@rollup/plugin-commonjs');
+const { babel } = require('@rollup/plugin-babel');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 
 gulp.task("clean", async function () {
     await del(['js']);
 });
 
 gulp.task("editorjs", function () {
-    return webpack({
-            entry: './src/js/editor.js',
-            output: {
-                filename: 'editor.js'
-            }
-        })
-        .pipe(uglify())
-        .pipe(gulp.dest('js'));
-});
+    let outputOptions = {
+        sourcemap: true,
+        format: 'es'
+    }
+    
 
-gulp.task('watchEditorjs', function () {
-    gulp.watch('./src/js/editor.js', gulp.series('editorjs'));
+    let stream = rollupStream({
+        input: './src/js/editor.js',
+        output: outputOptions,
+        plugins: [
+            babel({
+                exclude: 'node_modules/**',
+                presets: ['@babel/preset-env'],
+                babelHelpers: 'bundled',
+            }),
+            nodeResolve({
+                browser: true,
+                preferBuiltins: false,
+            }),
+            commonjs({
+                include: ['node_modules/**'],
+                exclude: [],
+                sourceMap: true,
+            }),
+        ],
+    })
+
+    stream = stream.pipe(source('editor.js'))
+        .pipe(buffer())
+        .pipe(plumber())
+        .pipe(uglify());
+
+    return stream.pipe(gulp.dest('js'));
 });
 
 gulp.task("commonjs", function () {
@@ -40,6 +68,10 @@ gulp.task('sass', function () {
         .pipe(concat('app.css'))
         .pipe(cleanCss())
         .pipe(gulp.dest('css'));
+});
+
+gulp.task('watchEditorjs', function () {
+    gulp.watch('./src/js/editor.js', gulp.series('editorjs'));
 });
 
 gulp.task('default', gulp.series('clean', 'editorjs', 'sass'));

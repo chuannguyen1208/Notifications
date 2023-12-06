@@ -1,4 +1,5 @@
 ﻿import EasyMDE from 'easymde';
+
 const
     editorIcon_heading = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M3 2H5V7.25L11 7.25V2H13V14H11V8.75L5 8.75V14H3V2Z" /></svg>`
     , editorIcon_bold = `<svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4 2H8.5C10.433 2 12 3.567 12 5.5C12 6.25657 11.7599 6.95707 11.3519 7.52949C12.3416 8.14781 13 9.24701 13 10.5C13 12.433 11.433 14 9.5 14H4V2ZM6 4H8.5C9.32843 4 10 4.67157 10 5.5C10 6.32843 9.32843 7 8.5 7H6V4ZM6 9V12H9.5C10.3284 12 11 11.3284 11 10.5C11 9.67157 10.3284 9 9.5 9H6Z" /></svg>`
@@ -170,7 +171,10 @@ const miniToolbar = [
     editorToolbar_preview,
 ];
 
-function insertYoutube(editor) {
+let easymde;
+let _inputFileElement;
+
+export function insertYoutube(editor) {
     let id = prompt("Please enter video ID", "");
     if (id !== null && id !== "") {
         let tag = `<iframe width="700" height="400" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
@@ -179,20 +183,16 @@ function insertYoutube(editor) {
     }
 }
 
-async function insertImage(editor) {
+export function insertImage(editor) {
     _inputFileElement.click();
 }
 
-function toggleSideBySide() {
+export function toggleSideBySide() {
     EasyMDE.toggleSideBySide(easymde);
-    // Wait for the screen to complete
     setTimeout(() => hljs.highlightElement(easymde.gui.sideBySide), 1000);
 }
 
-let easymde;
-let _inputFileElement;
-
-function loadEditor(textareaElement, inputFileElement, toolbar) {
+export function loadEditor(textareaElement, inputFileElement, toolbar) {
     _inputFileElement = inputFileElement;
 
     let selectedToolbar = fullToolbar;
@@ -201,7 +201,7 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
         selectedToolbar = miniToolbar;
     }
 
-    this.easymde = new EasyMDE({
+    easymde = new EasyMDE({
         element: textareaElement,
         autoDownloadFontAwesome: false,
         indentWithTabs: false,
@@ -224,13 +224,13 @@ function loadEditor(textareaElement, inputFileElement, toolbar) {
     toggleToolbarTooltip();
 }
 
-function getEditorValue() {
-    const value = this.easymde.value();
+export function getEditorValue() {
+    const value = easymde.value();
     return value;
 }
 
-function setEditorValue(txt) {
-    this.easymde.value(txt
+export function setEditorValue(txt) {
+    easymde.value(txt
         .replace(/&#xA;/g, '\r\n')
         .replace(/&#xD;/g, '')
         .replace(/&lt;/g, '<')
@@ -238,32 +238,29 @@ function setEditorValue(txt) {
         .replace(/&quot;/g, '"'));
 }
 
-function writeFrontFile(inputElement) {
+export function writeFrontFile(inputElement) {
     const file = inputElement.files[0];
     const fileName = file.name;
     const url = URL.createObjectURL(file);
 
     let output = '\r\n![' + fileName + '](' + url + ')';
-    let codemirror = this.easymde.codemirror;
+    let codemirror = easymde.codemirror;
     codemirror.selection;
     codemirror.replaceSelection(output);
 }
 
-function toggleToolbarTooltip() {
+export function toggleToolbarTooltip() {
     const buttons = document.querySelectorAll('.editor-toolbar button');
     for (var i = 0; i < buttons.length; i++) {
         const tooltipEle = document.createElement('span');
         tooltipEle.className = 'tooltip-content';
         tooltipEle.innerText = buttons[i].getAttribute('title');
-
         buttons[i].classList.add('tooltip-container');
         buttons[i].appendChild(tooltipEle);
     }
 }
 
-window.EditorMDE = {
-    loadEditor,
-    getEditorValue,
-    setEditorValue,
-    writeFrontFile
-};
+window.loadEditor = loadEditor;
+window.getEditorValue = getEditorValue;
+window.setEditorValue = setEditorValue;
+window.writeFrontFile = writeFrontFile;
