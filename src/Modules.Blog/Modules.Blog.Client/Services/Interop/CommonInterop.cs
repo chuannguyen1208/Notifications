@@ -8,7 +8,7 @@ public class CommonInterop
 
 	public CommonInterop(IJSRuntime js)
 	{
-		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/src/js/common.js").AsTask());
+		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/js/common.js").AsTask());
 	}
 
 	public async Task<string> BlogUrlToBase64(string blobUrl)

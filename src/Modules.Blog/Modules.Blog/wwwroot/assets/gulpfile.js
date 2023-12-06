@@ -6,6 +6,7 @@ const dartSass = require('sass');
 const gulpSass = require('gulp-sass')(dartSass);
 const concat = require('gulp-concat');
 const cleanCss = require('gulp-clean-css');
+const babel = require('gulp-babel');
 
 gulp.task("clean", async function () {
     await del(['js']);
@@ -13,13 +14,13 @@ gulp.task("clean", async function () {
 
 gulp.task("editorjs", function () {
     return webpack({
-        entry: './src/js/editor.js',
-        output: {
-            filename: 'editor.js'
-        }
-    })
-    .pipe(uglify())
-    .pipe(gulp.dest('js'));
+            entry: './src/js/editor.js',
+            output: {
+                filename: 'editor.js'
+            }
+        })
+        .pipe(uglify())
+        .pipe(gulp.dest('js'));
 });
 
 gulp.task('watchEditorjs', function () {
@@ -27,14 +28,10 @@ gulp.task('watchEditorjs', function () {
 });
 
 gulp.task("commonjs", function () {
-    return webpack({
-        entry: './src/js/common.js',
-        output: {
-            filename: 'common.js'
-        }
-    })
-    .pipe(uglify())
-    .pipe(gulp.dest('js'));
+    return gulp.src('./src/js/common.js')
+        .pipe(babel())
+        .pipe(uglify())
+        .pipe(gulp.dest('js'));
 });
 
 gulp.task('sass', function () {
