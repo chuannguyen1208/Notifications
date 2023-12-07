@@ -17,7 +17,7 @@
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
-            await _commonInterop.ToastSuccess("Editor loaded.");
+            await _commonInterop.ToastInfo("Easymde loaded.");
         }
     }
 

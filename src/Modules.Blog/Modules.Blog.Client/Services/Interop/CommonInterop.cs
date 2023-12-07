@@ -17,10 +17,9 @@ public class CommonInterop
 		return await module.InvokeAsync<string>("convertBlobURLToBase64", blobUrl);
 	}
 
-	public async Task Toast(string text, string type = "", int closeAfterMs = 2000)
+	public async Task ToastInfo(string text)
 	{
-		var module = await moduleTask.Value;
-		await module.InvokeVoidAsync("toast", text, type, closeAfterMs);
+		await Toast(text, "text-primary");
 	}
 
 	public async Task ToastSuccess(string text)
@@ -31,5 +30,11 @@ public class CommonInterop
 	public async Task ToastError(string text)
 	{
 		await Toast(text, "text-danger");
+	}
+
+	private async Task Toast(string text, string type = "", int closeAfterMs = 3000)
+	{
+		var module = await moduleTask.Value;
+		await module.InvokeVoidAsync("toast", text, type, closeAfterMs);
 	}
 }
