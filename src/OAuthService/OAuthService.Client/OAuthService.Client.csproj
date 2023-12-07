@@ -13,4 +13,8 @@
 		<PackageReference Include="Microsoft.Extensions.Http" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\OAuthService.Shared\OAuthService.Shared.csproj" />
+	</ItemGroup>
+
 </Project>

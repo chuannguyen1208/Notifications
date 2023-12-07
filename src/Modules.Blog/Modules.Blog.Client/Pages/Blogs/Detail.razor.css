@@ -10,3 +10,6 @@
     position: absolute;
     top: -65px;
 }
+::deep pre {
+    background: #eee;
+}

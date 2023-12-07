@@ -5,11 +5,13 @@ using Tools.MediatR;
 using Modules.Blog.UseCases.Blogs.Queries;
 using Tools.Routing;
 using Modules.Blog.UseCases.Blogs;
-using Modules.Blog.Client.Services;
 using Microsoft.AspNetCore.Identity;
 using Modules.Shared;
 using Modules.Blog.Client.Services.Interop;
 using Modules.Blog.Infra;
+using Modules.Blog.Client.Layout;
+using Modules.Blog.Shared.Services;
+using Modules.Blog.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,16 +24,21 @@ builder.Services
 	.AddSwaggerTool()
 	.AddMediatRTool(Assembly.GetExecutingAssembly(), typeof(GetBlogsQuery).Assembly);
 
-builder.Services.AddHttpClient<BlogsService>(client => client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!));
-builder.Services.AddScoped<EditorInterop>();
-builder.Services.AddScoped<CommonInterop>();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	.AddScheme<ReverseProxyAuthenticationOptions, ReverseProxyAuthenticationHandler>(IdentityConstants.ApplicationScheme, o => { });
 
 builder.Services.AddModuleBlogs();
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddScoped<IBlogsService, BlogsService>();
+
+builder.Services.AddTransient<IToastService, CommonInterop>();
+builder.Services.AddTransient<IBlobService, CommonInterop>();
+builder.Services.AddTransient<EditorInterop>();
 
 var app = builder.Build();
 
@@ -59,7 +66,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode()
 	.AddInteractiveWebAssemblyRenderMode()
-	.AddAdditionalAssemblies(typeof(BlogsService).Assembly);
+	.AddAdditionalAssemblies(typeof(BlogsLayout).Assembly);
 
 app.MigrateModuleBlogs();
 

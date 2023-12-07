@@ -1,23 +1,28 @@
-﻿const blobToBase64 = async blob => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result)
-        reader.error = (err) => reject(err)
-        reader.readAsDataURL(blob)
-    })
+﻿export const blobUrlToBase64 = async url => new Promise(resolve => {
+    fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+            const fileReader = new FileReader();
+            fileReader.addEventListener('load', () => resolve(fileReader.result));
+            fileReader.readAsDataURL(blob);
+        });
+});
+
+export const toast = (text, type = '' | 'text-success' | 'text-danger', closeAfterMs = 2000) => {
+    const toast = document.querySelector(".toast");
+
+    if (toast) {
+
+        const body = toast.querySelector(".toast-body");
+        body.innerHTML = text;
+        body.classList.add(type);
+
+        toast.classList.add('show');
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, closeAfterMs);
+    }
 }
 
-const setInnerHtml = (element, html) => {
-    console.log('setHtml', element);
-    console.log('html', html);
-    element.innerHTML = html;
-}
-
-window.convertBlobURLToBase64 = async (url) => {
-    const response = await fetch(url)
-    const blob = await response.blob();
-    const imageBase64 = await blobToBase64(blob)
-    return imageBase64;
-};
-
-window.setInnerHtml = setInnerHtml;
+window.blobUrlToBase64 = blobUrlToBase64;
+window.toast = toast;

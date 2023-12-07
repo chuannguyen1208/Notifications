@@ -1,48 +1,48 @@
-﻿const gulp = require('gulp');
-const uglify = require('gulp-uglify');
-const webpack = require('webpack-stream');
+﻿const rollupStream = require("@rollup/stream");
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const commonjs = require("@rollup/plugin-commonjs");
+const source = require("vinyl-source-stream");
+const buffer = require("vinyl-buffer");
+const gulp = require("gulp");
+const uglify = require("gulp-uglify");
+const gulpSass = require("gulp-sass")(require("sass"));
+const cleanCss = require("gulp-clean-css");
+const concat = require("gulp-concat");
 const del = require('del');
-const dartSass = require('sass');
-const gulpSass = require('gulp-sass')(dartSass);
-const concat = require('gulp-concat');
-const cleanCss = require('gulp-clean-css');
 
-gulp.task("clean", async function () {
-    await del(['js']);
-});
+async function clean() {
+    await del(['js', 'css']);
+}
 
-gulp.task("editorjs", function () {
-    return webpack({
-        entry: './src/js/editor.js',
-        output: {
-            filename: 'editor.js'
-        }
-    })
+function js(filename) {
+  const options = {
+    input: `src/js/${filename}`,
+    output: { format: "es", sourcemap: true },
+    plugins: [nodeResolve({ browser: true }), commonjs()],
+  };
+  return rollupStream(options)
+    .pipe(source(filename))
+    .pipe(buffer())
     .pipe(uglify())
-    .pipe(gulp.dest('js'));
-});
+    .pipe(gulp.dest("js"));
+}
 
-gulp.task('watchEditorjs', function () {
-    gulp.watch('./src/js/editor.js', gulp.series('editorjs'));
-});
+function css() {
+  return gulp
+    .src("./src/css/*.scss")
+    .pipe(gulpSass())
+    .pipe(concat("app.css"))
+    .pipe(cleanCss())
+    .pipe(gulp.dest("css"));
+}
 
-gulp.task("commonjs", function () {
-    return webpack({
-        entry: './src/js/common.js',
-        output: {
-            filename: 'common.js'
-        }
-    })
-    .pipe(uglify())
-    .pipe(gulp.dest('js'));
-});
+const editor = () => js('editor.js');
+const common = () => js('common.js');
+const build = gulp.series(clean, css, gulp.parallel(editor, common));
 
-gulp.task('sass', function () {
-    return gulp.src('./src/css/*.scss')
-        .pipe(gulpSass().on('error', gulpSass.logError))
-        .pipe(concat('app.css'))
-        .pipe(cleanCss())
-        .pipe(gulp.dest('css'));
-});
-
-gulp.task('default', gulp.series('clean', 'editorjs', 'sass'));
+exports.editor = editor;
+exports.common = common;
+exports.css = css;
+exports.clean = clean;
+exports.build = build;
+exports.default = build;

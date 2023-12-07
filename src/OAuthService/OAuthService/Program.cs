@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OAuthService;
 using OAuthService.Client.Pages;
 using OAuthService.Client.Services;
 using OAuthService.Components;
+using OAuthService.Services;
+using OAuthService.Shared;
 using System.Text.Json;
 using Tools.Auth;
 using Tools.Swagger;
@@ -10,7 +13,6 @@ using Yarp.ReverseProxy.Transforms;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents()
 	.AddInteractiveWebAssemblyComponents();
@@ -18,30 +20,24 @@ builder.Services.AddRazorComponents()
 builder.Services.AddAuthTool()
 	.AddSwaggerTool();
 
-builder.Services.AddHttpClient<AuthService>(client => client.BaseAddress = new Uri("http://localhost:5002"));
-
-
 builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
 	.AddTransforms(tbc =>
 	{
-		if (!string.IsNullOrEmpty(tbc.Route.AuthorizationPolicy))
+		tbc.AddRequestTransform(rtc =>
 		{
-			tbc.AddRequestTransform(rtc =>
-			{
-				var userDic = rtc.HttpContext.User.Claims.Aggregate(
-					new Dictionary<string, string>(),
-					(d, c) =>
-					{
-						d[c.Type] = c.Value;
-						return d;
-					}
-				);
+			var userDic = rtc.HttpContext.User.Claims.Aggregate(
+				new Dictionary<string, string>(),
+				(d, c) =>
+				{
+					d[c.Type] = c.Value;
+					return d;
+				}
+			);
 
-				rtc.ProxyRequest.Headers.Add("x-user-json", JsonSerializer.Serialize(userDic));
-				return ValueTask.CompletedTask;
-			});
-		}
+			rtc.ProxyRequest.Headers.Add("x-user-json", JsonSerializer.Serialize(userDic));
+			return ValueTask.CompletedTask;
+		});
 	});
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
@@ -51,6 +47,8 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 	});
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
@@ -78,10 +76,31 @@ app.MapRazorComponents<App>()
 	.AddAdditionalAssemblies(typeof(Login).Assembly);
 
 app.MigrateAuthTool();
-app.MapAuthEndpoints();
-
 app.MapReverseProxy();
 
-await AuthDbSeeder.SeedData(app.Services);
+app.MapPost("/login", PostLogin);
+app.MapPost("/register", PostRegister);
 
+await AuthDbSeeder.SeedData(app.Services);
 app.Run();
+
+async Task<IResult> PostLogin([FromBody] LoginModel model, [FromServices] IAuthService authService) 
+{
+	var res = await authService.LoginAsync(model);
+	return res switch
+	{
+		false => Results.BadRequest("Invalid username or password."),
+		_ => Results.Ok()
+	};
+}
+
+
+async Task<IResult> PostRegister([FromBody] RegisterModel model, [FromServices] IAuthService authService)
+{
+	var res = await authService.RegisterAsync(model);
+	return res switch
+	{
+		false => Results.BadRequest(),
+		_ => Results.Created()
+	};
+}

@@ -17,14 +17,16 @@ public class ReverseProxyAuthenticationHandler(
 	ILoggerFactory logger,
 	UrlEncoder encoder) : AuthenticationHandler<ReverseProxyAuthenticationOptions>(options, logger, encoder)
 {
+	private static readonly string[] _defaultHeader = ["{}"];
+
 	protected override async Task<AuthenticateResult> HandleAuthenticateAsync() =>
 		await Task.Run(() =>
 		{
 			var authenticationHeader = Request.Headers[Options.AuthHeaderName];
 
-			if (authenticationHeader.Count == 0)
+			if (string.IsNullOrEmpty(authenticationHeader) || authenticationHeader.Equals(_defaultHeader))
 			{
-				return AuthenticateResult.Fail("Auth header missing");
+				return AuthenticateResult.Fail("Unauthenticated.");
 			}
 
 			var dictionary = JsonSerializer.Deserialize<Dictionary<string, string>>(authenticationHeader.ToString()) ?? [];

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.Blog.Infra.Repo;
 using Modules.Blog.UseCases;
+using Modules.Blog.UseCases.Blogs;
 
 namespace Modules.Blog.Infra;
 
@@ -12,6 +13,7 @@ public static class DependencyInjection
 	{
 		services.AddDbContext<BlogDbContext>(o => o.UseSqlite("DataSource=./db/blog.db"));
 		services.AddScoped<IBlogsRepo, BlogRepo>();
+		services.AddSingleton<MarkdigProvider>();
 		return services;
 	}
 

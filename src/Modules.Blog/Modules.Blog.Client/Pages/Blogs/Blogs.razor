@@ -1,6 +1,6 @@
 ﻿@page "/"
-@rendermode InteractiveServer
-@inject BlogsService BlogsService
+@layout BlogsLayout
+@inject IBlogsService BlogsService
 @inject NavigationManager _nav;
 
 @if (loading)
@@ -27,10 +27,10 @@ else
                                 <i class="bi bi-calendar2 me-1"></i>
                                 @(blog.Created.ToString("MMM d,yyyy"))
                             </span>
-                            <button type="button" class="btn btn-link btn-sm text-decoration-none" @onclick="@(() => _nav.NavigateTo($"{blog.Id}"))">
+                            <a type="button" class="btn btn-link btn-sm text-decoration-none" href="@(blog.Id)">
                                 Read
                                 <i class="bi bi-arrow-right ms-1"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

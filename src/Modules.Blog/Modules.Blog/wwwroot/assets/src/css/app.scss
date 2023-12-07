@@ -1,15 +1,32 @@
 ﻿body {
     font-size: 14px;
 }
+
+.disabled {
+    opacity: .5;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
+
+.editor-toolbar {
+    button.tooltip-container {
+        width: auto !important;
+        min-width: 40px;
+        min-height: 40px;
+        margin-right: 4px;
+    }
+}
+
 .fs-12 {
     font-size: 12px;
 }
+
 .fs-14 {
     font-size: 14px;
 }
+
 .fs-16 {
     font-size: 16px;
 }
