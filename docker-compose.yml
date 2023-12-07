@@ -8,7 +8,6 @@ services:
       dockerfile: src/OAuthService/OAuthService/Dockerfile
     networks:
       - my_network
-    container_name: host
 
   modules.blog:
     image: ${DOCKER_REGISTRY-}module.blog
@@ -17,7 +16,6 @@ services:
       dockerfile: src/Modules.Blog/Modules.Blog/Dockerfile
     networks:
       - my_network
-    container_name: modules.blog
 
   # sqlserver:
   #   image: mcr.microsoft.com/mssql/server:2017-latest

@@ -2,25 +2,27 @@ version: '3.4'
 
 services:
   host.web:
+    container_name: host
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/notification.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Root!234
       - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://modules.blog
       - IdentityUser__Password=Root!234
     ports:
-      - "5000:80"
+      - 8080:80
+      - 8081:443
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ./.containers/https:/https:ro
       - ./.containers/db:/app/db
   modules.blog:
+    container_name: modules.blog
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=80
-      - BaseUrl=http://localhost
+      - ASPNETCORE_URLS=http://+:80
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ./.containers/db:/app/db
 
   # sqlserver:
