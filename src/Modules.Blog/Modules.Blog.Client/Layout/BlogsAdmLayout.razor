@@ -1,7 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@attribute [Authorize]
-@inject IJSRuntime JS
-@inject NavigationManager Nav
 
 <style>
     .navbar-brand .subtitle {
@@ -63,10 +60,3 @@
     </header>
     @Body
 </div>
-
-@code {
-    private bool IsPageActive(string page)
-    {
-        return true;
-    }
-}

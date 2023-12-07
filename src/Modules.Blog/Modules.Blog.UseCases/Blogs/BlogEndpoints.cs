@@ -14,8 +14,8 @@ public class BlogEndpoints : IEndpointsDefinition
 		app.MapGet("/api/blogs", GetBlogs);
 		app.MapGet("/api/blogs/{id}", GetBlogById);
 		app.MapGet("/api/blogs/summary", GetDashboardSummary);
-		app.MapPost("/api/blogs", EditBlog);
-		app.MapDelete("/api/blogs/{id}", DeleteBlog);
+		app.MapPost("/api/blogs", EditBlog).RequireAuthorization();
+		app.MapDelete("/api/blogs/{id}", DeleteBlog).RequireAuthorization();
 	}
 
 	private static async Task<IResult> DeleteBlog(int id, [FromServices] IBlogsService blogsService)
