@@ -18,7 +18,6 @@
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
-            await _toastSvc.ToastInfo("Editor loaded.");
         }
     }
 
