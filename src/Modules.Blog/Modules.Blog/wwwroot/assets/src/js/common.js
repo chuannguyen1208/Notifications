@@ -1,16 +1,13 @@
-﻿export const blobToBase64 = async blob => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result)
-        reader.error = (err) => reject(err)
-        reader.readAsDataURL(blob)
-    })
-}
+﻿export const blobToBase64 = async blob => new Promise(resolve => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => { resolve(reader.result); }, false);
+    reader.readAsDataURL(blob);
+});
 
 export const convertBlobURLToBase64 = async (url) => {
-    const response = await fetch(url)
+    const response = await fetch(url);
     const blob = await response.blob();
-    const imageBase64 = await blobToBase64(blob)
+    const imageBase64 = await blobToBase64(blob);
     return imageBase64;
 };
 
