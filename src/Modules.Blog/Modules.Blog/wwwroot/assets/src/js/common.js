@@ -1,15 +1,12 @@
-﻿export const blobToBase64 = async blob => new Promise(resolve => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => { resolve(reader.result); }, false);
-    reader.readAsDataURL(blob);
+﻿export const blobUrlToBase64 = async url => new Promise(resolve => {
+    fetch(url)
+        .then(res => res.blob())
+        .then(blob => {
+            const fileReader = new FileReader();
+            fileReader.addEventListener('load', () => resolve(fileReader.result));
+            fileReader.readAsDataURL(blob);
+        });
 });
-
-export const convertBlobURLToBase64 = async (url) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const imageBase64 = await blobToBase64(blob);
-    return imageBase64;
-};
 
 export const toast = (text, type = '' | 'text-success' | 'text-danger', closeAfterMs = 2000) => {
     const toast = document.querySelector(".toast");
@@ -27,5 +24,5 @@ export const toast = (text, type = '' | 'text-success' | 'text-danger', closeAft
     }
 }
 
-window.convertBlobURLToBase64 = convertBlobURLToBase64;
+window.blobUrlToBase64 = blobUrlToBase64;
 window.toast = toast;

@@ -3,7 +3,7 @@
 @using System.Text
 @using System.Text.RegularExpressions
 @inject EditorInterop _editorInterop
-@inject CommonInterop _commonInterop
+@inject IBlobService _blobSvc
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
 <InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
@@ -17,7 +17,6 @@
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
-            await _commonInterop.ToastInfo("Easymde loaded.");
         }
     }
 
@@ -39,8 +38,8 @@
             foreach (Match match in imgsMatches)
             {
                 var blobUrl = match.Groups[1].Value;
-                var base64 = await _commonInterop.BlogUrlToBase64(blobUrl).ConfigureAwait(false); // only work on WebAssembly mode
-                contentStringBuilder.Replace(blobUrl, base64);
+                var res = await _blobSvc.BlobUrlToBase64(blobUrl);
+                Console.WriteLine(res);
             }
 
             content = contentStringBuilder.ToString();

@@ -33,6 +33,8 @@ builder.Services.AddModuleBlogs();
 builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddScoped<IBlogsService, BlogsService>();
+builder.Services.AddScoped<IBlobService, CommonInterop>();
+
 builder.Services.AddScoped<EditorInterop>();
 builder.Services.AddScoped<CommonInterop>();
 

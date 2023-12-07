@@ -13,7 +13,10 @@ builder.Services.AddHttpClient("default", client =>
 
 builder.Services.AddTransient<HttpErrorHandler>();
 builder.Services.AddScoped<IBlogsService, BlogsService>();
-builder.Services.AddScoped<EditorInterop>();
+builder.Services.AddScoped<IBlobService, CommonInterop>();
+
 builder.Services.AddScoped<CommonInterop>();
+builder.Services.AddScoped<EditorInterop>();
+
 
 await builder.Build().RunAsync();
