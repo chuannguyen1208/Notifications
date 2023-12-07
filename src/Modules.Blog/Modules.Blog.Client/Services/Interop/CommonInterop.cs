@@ -3,7 +3,7 @@ using Modules.Blog.Shared.Services;
 
 namespace Modules.Blog.Client.Services.Interop;
 
-public class CommonInterop : IBlobService
+public class CommonInterop : IBlobService, IToastService
 {
 	private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
@@ -12,19 +12,19 @@ public class CommonInterop : IBlobService
 		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/js/common.js").AsTask());
 	}
 
-	public async Task ToastInfo(string text)
+	public async Task ToastInfo(string message)
 	{
-		await Toast(text, "text-primary");
+		await Toast(message, "text-primary");
 	}
 
-	public async Task ToastSuccess(string text)
+	public async Task ToastSuccess(string message)
 	{
-		await Toast(text, "text-success");
+		await Toast(message, "text-success");
 	}
 
-	public async Task ToastError(string text)
+	public async Task ToastError(string message)
 	{
-		await Toast(text, "text-danger");
+		await Toast(message, "text-danger");
 	}
 
 	private async Task Toast(string text, string type = "", int closeAfterMs = 3000)

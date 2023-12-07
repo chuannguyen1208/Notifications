@@ -4,6 +4,7 @@
 @using System.Text.RegularExpressions
 @inject EditorInterop _editorInterop
 @inject IBlobService _blobSvc
+@inject IToastService _toastSvc
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
 <InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
@@ -17,6 +18,7 @@
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
+            await _toastSvc.ToastInfo("Editor loaded.");
         }
     }
 

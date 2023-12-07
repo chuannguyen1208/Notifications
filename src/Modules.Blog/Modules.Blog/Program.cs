@@ -34,9 +34,8 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddScoped<IBlogsService, BlogsService>();
 builder.Services.AddScoped<IBlobService, CommonInterop>();
-
+builder.Services.AddScoped<IToastService, CommonInterop>();
 builder.Services.AddScoped<EditorInterop>();
-builder.Services.AddScoped<CommonInterop>();
 
 var app = builder.Build();
 
