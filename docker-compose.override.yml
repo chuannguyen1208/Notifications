@@ -5,17 +5,12 @@ services:
     container_name: host
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=8081
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/notification.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Root!234
+      - ASPNETCORE_URLS=http://+:80
       - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://modules.blog
       - IdentityUser__Password=Root!234
     ports:
-      - 8080:80
-      - 8081:443
+      - 80
     volumes:
-      - ./.containers/https:/https:ro
       - ./.containers/db:/app/db
   modules.blog:
     container_name: modules.blog
