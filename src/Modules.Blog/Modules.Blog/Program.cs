@@ -36,7 +36,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IBlogsService, BlogsService>();
 builder.Services.AddScoped<IToastService, CommonInterop>();
-builder.Services.AddScoped<IBlobService, BlobService>();
+builder.Services.AddScoped<IBlobService, CommonInterop>();
 builder.Services.AddScoped<EditorInterop>();
 
 var app = builder.Build();
