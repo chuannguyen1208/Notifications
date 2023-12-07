@@ -39,7 +39,7 @@
             {
                 var blobUrl = match.Groups[1].Value;
                 var res = await _blobSvc.BlobUrlToBase64(blobUrl);
-                Console.WriteLine(res);
+                contentStringBuilder.Replace(blobUrl, res);
             }
 
             content = contentStringBuilder.ToString();
