@@ -16,28 +16,28 @@ services:
       - ./.containers/db/demo:/app/db
     networks:
       - noti_demo_network
-
-  # host.web:
-  #   image: ${DOCKER_REGISTRY-}oauth.host
-  #   build:
-  #     context: .
-  #     dockerfile: src/OAuthService/OAuthService/Dockerfile
-  #   networks:
-  #     - noti_demo_network
-  #   ports:
-  #     - 80
-  #     - 443
-  #   container_name: demo.host
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS=https://+:443;http://+:80
-  #     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-  #     - ASPNETCORE_Kestrel__Certificates__Default__Password='Root!234'
-  #     - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=https://demo.modules.blog
-  #     - IdentityUser__Password=Root!234
-  #   volumes:
-  #     - ./.containers/https:/https:ro
-  #     - ./.containers/db/demo:/app/db
+  host.web:
+    image: ${DOCKER_REGISTRY-}oauth.host
+    build:
+      context: .
+      dockerfile: src/OAuthService/OAuthService/Dockerfile
+    networks:
+      - noti_demo_network
+    ports:
+      - 8080:80
+      - 8081:443
+    container_name: demo.host
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/notification.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Root!234
+      - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://demo.modules.blog
+      - IdentityUser__Password=Root!234
+    volumes:
+      - ./.containers/https:/https:ro
+      - ./.containers/db/demo:/app/db
 
   # ngrok:
   #   image: ngrok/ngrok:alpine
