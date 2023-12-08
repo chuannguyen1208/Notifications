@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -16,6 +17,21 @@ public class BlogEndpoints : IEndpointsDefinition
 		app.MapGet("/api/blogs/summary", GetDashboardSummary);
 		app.MapPost("/api/blogs", EditBlog).RequireAuthorization();
 		app.MapDelete("/api/blogs/{id}", DeleteBlog).RequireAuthorization();
+		app.MapPost("/api/files", UploadFile).DisableAntiforgery().WithTags("Files");
+	}
+
+	private static async Task<IResult> UploadFile(IFormFile formFile, [FromServices] IWebHostEnvironment env)
+	{
+		if (formFile.Length > 0)
+		{
+			var fileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(formFile.FileName));
+			var returnFilePath = Path.Combine("img\\temp", fileName);
+			var filePath = Path.Combine(env.ContentRootPath, "wwwroot", returnFilePath);
+			using var stream = File.Create(filePath);
+			await formFile.CopyToAsync(stream);
+			return Results.Ok(returnFilePath);
+		}
+		return Results.Empty;
 	}
 
 	private static async Task<IResult> DeleteBlog(int id, [FromServices] IBlogsService blogsService)
