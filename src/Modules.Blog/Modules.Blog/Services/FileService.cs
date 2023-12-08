@@ -10,6 +10,8 @@ internal class FileService(IWebHostEnvironment env) : IFileService
 		var fileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
 		var returnFilePath = Path.Combine("img\\temp", fileName);
 		var filePath = Path.Combine(env.ContentRootPath, "wwwroot", returnFilePath);
+		var dir = Path.GetDirectoryName(filePath);
+		Directory.CreateDirectory(dir!);
 
 		await using FileStream fs = new(filePath, FileMode.Create);
 		await file.OpenReadStream().CopyToAsync(fs);
