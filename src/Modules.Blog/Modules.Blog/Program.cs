@@ -37,7 +37,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IBlogsService, BlogsService>();
 
 builder.Services.AddTransient<IToastService, CommonInterop>();
-builder.Services.AddTransient<IBlobService, CommonInterop>();
+builder.Services.AddTransient<IBlobService, BlobService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<EditorInterop>();
 

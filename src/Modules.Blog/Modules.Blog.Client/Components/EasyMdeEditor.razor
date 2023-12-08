@@ -40,7 +40,7 @@
     public async Task<string> GetContentAsync()
     {
         var content = await _editorInterop.GetEditorValueAsync();
-        var imgsMatches = StringHelper.MarkdownImgBlobGeneratedRegex().Matches(content);
+        var imgsMatches = StringHelper.MarkdownImgTempGeneratedRegex().Matches(content);
 
         if (imgsMatches.Count > 0)
         {
