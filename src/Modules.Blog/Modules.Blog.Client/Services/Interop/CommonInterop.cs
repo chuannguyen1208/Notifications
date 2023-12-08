@@ -9,7 +9,7 @@ public class CommonInterop : IBlobService, IToastService
 
 	public CommonInterop(IJSRuntime js)
 	{
-		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/js/common.js").AsTask());
+		moduleTask = new(() => js.InvokeAsync<IJSObjectReference>("import", "./js/common.js").AsTask());
 	}
 
 	public async Task ToastInfo(string message)

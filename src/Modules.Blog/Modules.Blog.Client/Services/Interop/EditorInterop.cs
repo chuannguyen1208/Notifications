@@ -9,7 +9,7 @@ public class EditorInterop
 
 	public EditorInterop(IJSRuntime js)
 	{
-		moduleTask = new Lazy<Task<IJSObjectReference>>(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/js/editor.js").AsTask());
+		moduleTask = new Lazy<Task<IJSObjectReference>>(() => js.InvokeAsync<IJSObjectReference>("import", "./js/editor.js").AsTask());
 	}
 
 	public async ValueTask LoadEditorAsync(ElementReference textareaElement, ElementReference inputFileElement, string toolbar = "miniToolbar")
