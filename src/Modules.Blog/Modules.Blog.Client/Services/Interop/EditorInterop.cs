@@ -24,10 +24,10 @@ public class EditorInterop
 		await module.InvokeVoidAsync("writeFrontFile", imageUpload);
 	}
 
-	public async ValueTask WriteFrontFileTempAsync(string url)
+	public async ValueTask WriteFrontFileTempAsync(string filename, string url)
 	{
 		var module = await moduleTask.Value;
-		await module.InvokeVoidAsync("writeFrontFileTemp", url);
+		await module.InvokeVoidAsync("writeFrontFileTemp", filename, url);
 	}
 
 	public async ValueTask SetEditorValueAsync(string content)

@@ -249,7 +249,7 @@ export function writeFrontFile(inputElement) {
     codemirror.replaceSelection(output);
 }
 
-export function writeFrontFileTemp(url) {
+export function writeFrontFileTemp(fileName, url) {
     let output = '\r\n![' + fileName + '](' + url + ')';
     let codemirror = easymde.codemirror;
     codemirror.selection;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -20,18 +20,10 @@ public class BlogEndpoints : IEndpointsDefinition
 		app.MapPost("/api/files", UploadFile).DisableAntiforgery().WithTags("Files");
 	}
 
-	private static async Task<IResult> UploadFile(IFormFile formFile, [FromServices] IWebHostEnvironment env)
+	private static async Task<IResult> UploadFile(IBrowserFile file, [FromServices] IFileService fileService)
 	{
-		if (formFile.Length > 0)
-		{
-			var fileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(formFile.FileName));
-			var returnFilePath = Path.Combine("img\\temp", fileName);
-			var filePath = Path.Combine(env.ContentRootPath, "wwwroot", returnFilePath);
-			using var stream = File.Create(filePath);
-			await formFile.CopyToAsync(stream);
-			return Results.Ok(returnFilePath);
-		}
-		return Results.Empty;
+		var res = await fileService.UploadFile(file);
+		return Results.Ok(res);
 	}
 
 	private static async Task<IResult> DeleteBlog(int id, [FromServices] IBlogsService blogsService)

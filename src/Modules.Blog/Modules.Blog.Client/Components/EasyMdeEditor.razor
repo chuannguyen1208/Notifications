@@ -5,9 +5,11 @@
 @inject EditorInterop _editorInterop
 @inject IBlobService _blobSvc
 @inject IToastService _toastSvc
+@inject IFileService _fileSvc
+@inject NavigationManager nav
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
-<InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
+<InputFile @ref="_uploadFileElement" OnChange="@LoadFile" style="display: none"></InputFile>
 
 @code {
     ElementReference _textareaElement;
@@ -19,6 +21,14 @@
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
         }
+    }
+
+    private async Task LoadFile(InputFileChangeEventArgs args)
+    {
+        var filename = args.File.Name;
+        var url = await _fileSvc.UploadFile(args.File);
+        var fullUrl = nav.BaseUri + url.Replace('\\', '/');
+        await _editorInterop.WriteFrontFileTempAsync(filename, fullUrl);
     }
 
     protected async Task LoadImageFiles(InputFileChangeEventArgs args)
