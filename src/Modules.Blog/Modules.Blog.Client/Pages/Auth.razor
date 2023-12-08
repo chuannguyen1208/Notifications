@@ -1,19 +1,6 @@
-﻿@page "/auth"
+﻿@using BlazorPageScript
+@page "/auth"
 @layout BlogsAdmLayout
-@rendermode InteractiveServer
-@inject NavigationManager nav
 
-<span @ref="LoadingElement">Loading...</span>
-
-@code {
-    ElementReference? LoadingElement;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await Task.Delay(2000);
-            nav.NavigateTo("adm");
-        }
-    }
-}
+<PageTitle>Auth</PageTitle>
+<PageScript Src="./Pages/Auth.razor.js" />

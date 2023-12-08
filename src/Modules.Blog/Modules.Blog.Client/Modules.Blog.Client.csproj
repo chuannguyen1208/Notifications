@@ -15,6 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\BlazorPageScript\BlazorPageScript.csproj" />
 		<ProjectReference Include="..\Modules.Blog.Shared\Modules.Blog.Shared.csproj" />
 	</ItemGroup>
 
