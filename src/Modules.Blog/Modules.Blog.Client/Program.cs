@@ -15,6 +15,7 @@ builder.Services.AddTransient<HttpErrorHandler>();
 builder.Services.AddScoped<IBlogsService, BlogsService>();
 builder.Services.AddTransient<IBlobService, CommonInterop>();
 builder.Services.AddTransient<IToastService, CommonInterop>();
+builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<EditorInterop>();
 
 await builder.Build().RunAsync();
