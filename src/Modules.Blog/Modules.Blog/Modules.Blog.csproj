@@ -9,6 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="wwwroot\assets\**" />
+	  <Content Remove="wwwroot\assets\**" />
+	  <EmbeddedResource Remove="wwwroot\assets\**" />
+	  <None Remove="wwwroot\assets\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\Modules.Shared\Modules.Shared.csproj" />
 		<ProjectReference Include="..\..\Tools\Tools.csproj" />
 		<ProjectReference Include="..\Modules.Blog.Client\Modules.Blog.Client.csproj" />
@@ -20,18 +27,6 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\assets\css\" />
-		<Folder Include="wwwroot\assets\js\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="wwwroot\assets\.tt">
-	    <Generator>TextTemplatingFileGenerator</Generator>
-	    <LastGenOutput>.txt</LastGenOutput>
-	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
