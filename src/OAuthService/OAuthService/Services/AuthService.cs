@@ -19,6 +19,11 @@ internal class AuthService(
 		return res.Succeeded;
 	}
 
+	public async Task LogoutAsync()
+	{
+		await signInManager.SignOutAsync();
+	}
+
 	public async Task<bool> RegisterAsync(RegisterModel model)
 	{
 		var user = new IdentityUser(model.Email!);
