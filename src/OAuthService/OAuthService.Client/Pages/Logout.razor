@@ -14,13 +14,17 @@
         await authSvc.LogoutAsync();
 
         await Task.Delay(1000);
-        if (!string.IsNullOrEmpty(ReturnUrl))
+
+        if (string.IsNullOrEmpty(ReturnUrl))
         {
-            nav.NavigateTo(ReturnUrl);
+            message = "Logged out.";
         }
         else
         {
-            message = "Logged out, no return url detected.";
+            nav.NavigateTo(ReturnUrl);
         }
     }
+
+    private bool DoNothing() => true;
+    private bool Redirect() => true;
 }
