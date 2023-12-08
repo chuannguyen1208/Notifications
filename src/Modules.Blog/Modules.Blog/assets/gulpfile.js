@@ -11,29 +11,29 @@ const concat = require("gulp-concat");
 const del = require('del');
 
 async function clean() {
-    await del(['js', 'css']);
+    await del(['../wwwroot/js', '../wwwroot/css'], { force: true });
 }
 
 function js(filename) {
-  const options = {
-    input: `src/js/${filename}`,
-    output: { format: "es", sourcemap: true },
-    plugins: [nodeResolve({ browser: true }), commonjs()],
-  };
-  return rollupStream(options)
-    .pipe(source(filename))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest("js"));
+    const options = {
+        input: `src/js/${filename}`,
+        output: { format: "es", sourcemap: true },
+        plugins: [nodeResolve({ browser: true }), commonjs()],
+    };
+    return rollupStream(options)
+        .pipe(source(filename))
+        .pipe(buffer())
+        .pipe(uglify())
+        .pipe(gulp.dest("../wwwroot/js"));
 }
 
 function css() {
-  return gulp
-    .src("./src/css/*.scss")
-    .pipe(gulpSass())
-    .pipe(concat("app.css"))
-    .pipe(cleanCss())
-    .pipe(gulp.dest("css"));
+    return gulp
+        .src("./src/css/*.scss")
+        .pipe(gulpSass())
+        .pipe(concat("app.css"))
+        .pipe(cleanCss())
+        .pipe(gulp.dest("../wwwroot/css"));
 }
 
 const editor = () => js('editor.js');
