@@ -4,8 +4,12 @@
     <Authorized>
         @ChildContent
     </Authorized>
+    <NotAuthorized>
+        @NotAuthorizedContent
+    </NotAuthorized>
 </AuthorizeView>
 
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? NotAuthorizedContent { get; set; }
 }
