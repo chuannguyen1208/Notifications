@@ -25,30 +25,17 @@
                 <div>
                     <span>@blog.Created.ToString("MMM d, yyyy")</span>
                 </div>
-                
-                <div class="ms-3">
-                    <MyComps.Tooltip TooltipContent="Published">
-                        <i class="bi bi-check-lg fs-5"></i>
-                    </MyComps.Tooltip>
-                </div>
-
-                <div class="ms-3">
-                    <MyComps.Tooltip TooltipContent="View">
-                        <i class="bi bi-eye fs-5 cursor-pointer" @onclick="@(() => nav.NavigateTo($"{blog.Id}"))"></i>
-                    </MyComps.Tooltip>
-                </div>
-
-                <div class="ms-3">
-                    <MyComps.Tooltip TooltipContent="Edit">
-                        <i class="bi bi-pencil fs-5 cursor-pointer" @onclick="@(() => nav.NavigateTo($"adm/blog/{blog.Id}"))"></i>
-                    </MyComps.Tooltip>
-                </div>
-
-                <div class="ms-3">
+                <div>
+                    <a class="nav-item" href="@blog.Id">
+                        <i class="bi bi-eye fs-5" />
+                    </a>
+                    <a class="nav-item ms-3" href="@($"adm/blog/{blog.Id}")">
+                        <i class="bi bi-pencil fs-5" />
+                    </a>
                     <MyComps.AuthorizeComp>
-                        <MyComps.Tooltip TooltipContent="Delete">
-                            <i class="bi bi-trash cursor-pointer fs-5" @onclick="@(async () => await DeleteBlog(blog.Id))"></i>
-                        </MyComps.Tooltip>
+                        <a class="nav-item ms-3 cursor-pointer" @onclick="(e) => DeleteBlog(e, blog.Id)" @onclick:preventDefault>
+                            <i class="bi bi-trash fs-5" />
+                        </a>
                     </MyComps.AuthorizeComp>
                 </div>
             </div>
@@ -65,7 +52,7 @@
         await GetBlogs();
     }
 
-    async Task DeleteBlog(int id)
+    async Task DeleteBlog(EventArgs e, int id)
     {
         await _blogsService.DeleteAsync(id);
         await GetBlogs();
