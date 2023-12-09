@@ -33,7 +33,10 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 builder.Services.AddModuleBlogs();
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("default", client =>
+{
+	client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!);
+});
 
 builder.Services.AddScoped<IBlogsService, BlogsService>();
 builder.Services.AddScoped<IUserService, UserService>();

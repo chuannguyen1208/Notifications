@@ -52,22 +52,20 @@
     public async Task<string> GetContentAsync()
     {
         var content = await _editorInterop.GetEditorValueAsync();
-        // var imgsMatches = StringHelper.MarkdownImgTempGeneratedRegex().Matches(content);
+        var imgsMatches = StringHelper.MarkdownImgTempGeneratedRegex().Matches(content);
+        if (imgsMatches.Count > 0)
+        {
+            var contentStringBuilder = new StringBuilder(content);
 
-        // if (imgsMatches.Count > 0)
-        // {
-        //     var contentStringBuilder = new StringBuilder(content);
+            foreach (Match match in imgsMatches)
+            {
+                var blobUrl = match.Groups[1].Value;
+                var res = await _blobSvc.BlobUrlToBase64(blobUrl);
+                contentStringBuilder.Replace(blobUrl, res);
+            }
 
-        //     foreach (Match match in imgsMatches)
-        //     {
-        //         var blobUrl = match.Groups[1].Value;
-        //         var res = await _blobSvc.BlobUrlToBase64(blobUrl);
-        //         contentStringBuilder.Replace(blobUrl, res);
-        //     }
-
-        //     content = contentStringBuilder.ToString();
-        // }
-
+            content = contentStringBuilder.ToString();
+        }
         return content;
     }
 }
