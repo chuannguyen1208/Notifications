@@ -14,7 +14,7 @@
 @code {
     ElementReference _textareaElement;
     InputFile _uploadFileElement = null!;
-    private long maxFileSize = 1024 * 1;
+    private long maxFileSize = 1024 * 500; // 500KB
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
