@@ -22,7 +22,11 @@ public record EditBlogCommand(int Id, string Title, string Description, string C
 
 			if (blog.Id == 0)
 			{
-				await blogsRepo.CreateBlog(blog);
+				await blogsRepo.CreateBlog(blog).ConfigureAwait(false);
+			}
+			else
+			{
+				await blogsRepo.EditBlog(blog).ConfigureAwait(false);
 			}
 		}
 	}

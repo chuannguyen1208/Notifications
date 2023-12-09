@@ -8,4 +8,5 @@ public interface IBlogsRepo
 	Task<BlogEntity?> GetBlogAsync(int id);
 	Task CreateBlog(BlogEntity blog);
 	Task DeleteAsync(int id, CancellationToken cancellationToken);
+	Task EditBlog(BlogEntity blog);
 }
