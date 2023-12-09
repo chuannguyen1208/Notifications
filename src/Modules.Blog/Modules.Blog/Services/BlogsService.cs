@@ -6,15 +6,27 @@ using Modules.Blog.UseCases.Blogs.Queries;
 
 namespace Modules.Blog.Services;
 
-internal class BlogsService(IMediator mediator) : IBlogsService
+internal class BlogsService(IMediator mediator, IUserService userService) : IBlogsService
 {
 	public async Task DeleteAsync(int id)
 	{
+		var isAuthenticated = await userService.IsAuthenticated().ConfigureAwait(false);
+		if (!isAuthenticated)
+		{
+			throw new InvalidOperationException("Unauthorized.");
+		}
+
 		await mediator.Send(new DeleteBlogCommand(id)).ConfigureAwait(false);
 	}
 
 	public async Task EditBlogAsync(EditBlogDto editBlogDto)
 	{
+		var isAuthenticated = await userService.IsAuthenticated().ConfigureAwait(false);
+		if (!isAuthenticated)
+		{
+			throw new InvalidOperationException("Unauthorized.");
+		}
+
 		await mediator.Send(new EditBlogCommand(
 			Id: editBlogDto.Id,
 			Title: editBlogDto.Title,

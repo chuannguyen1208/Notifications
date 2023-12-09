@@ -3,6 +3,7 @@
 @layout BlogsAdmLayout
 @inject IBlogsService BlogsService
 @inject NavigationManager Navigation
+@inject IToastService toast
 
 <PageTitle>@(Id > 0 ? "Edit" : "New blog")</PageTitle>
 
@@ -51,10 +52,19 @@
 
     async Task Save()
     {
-        var content = await _editor.GetContentAsync();
-        Blog.Content = content;
-        await BlogsService.EditBlogAsync(Blog);
-        Navigation.NavigateTo("adm");
+        try
+        {
+            var content = await _editor.GetContentAsync();
+            Blog.Content = content;
+            await BlogsService.EditBlogAsync(Blog);
+            Navigation.NavigateTo("adm");
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            await toast.ToastError(message);
+        }
+       
     }
 
     async Task Publish()
