@@ -33,8 +33,8 @@
         {
             var filename = args.File.Name;
             var url = await _fileSvc.UploadFile(args.File, maxFileSize);
-            var fullUrl = nav.BaseUri + url.Replace('\\', '/');
-            await _editorInterop.WriteFrontFileTempAsync(filename, fullUrl);
+            // var fullUrl = nav.BaseUri + url.Replace('\\', '/');
+            await _editorInterop.WriteFrontFileTempAsync(filename, url);
         }
         catch(Exception ex)
         {
