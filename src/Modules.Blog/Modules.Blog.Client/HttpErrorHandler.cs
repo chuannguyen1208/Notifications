@@ -1,9 +1,9 @@
 ﻿
-using Modules.Blog.Client.Services.Interop;
+using Modules.Blog.Shared.Services;
 
 namespace Modules.Blog.Client;
 
-internal class HttpErrorHandler(CommonInterop commonInterop) : DelegatingHandler
+internal class HttpErrorHandler(IToastService toast) : DelegatingHandler
 {
 	protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 	{
@@ -19,10 +19,11 @@ internal class HttpErrorHandler(CommonInterop commonInterop) : DelegatingHandler
 				_ => await response.Content.ReadAsStringAsync(cancellationToken)
 			};
 
-			await commonInterop.ToastError(content);
+			await toast.ToastError(content);
 			throw new HttpRequestException(content);
 		}
 
+		await toast.ToastSuccess("Successful");
 		return response;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -14,8 +15,15 @@ public class BlogEndpoints : IEndpointsDefinition
 		app.MapGet("/api/blogs", GetBlogs);
 		app.MapGet("/api/blogs/{id}", GetBlogById);
 		app.MapGet("/api/blogs/summary", GetDashboardSummary);
-		app.MapPost("/api/blogs", EditBlog);
-		app.MapDelete("/api/blogs/{id}", DeleteBlog);
+		app.MapPost("/api/blogs", EditBlog).RequireAuthorization();
+		app.MapDelete("/api/blogs/{id}", DeleteBlog).RequireAuthorization();
+		app.MapPost("/api/files", UploadFile).DisableAntiforgery().WithTags("Files");
+	}
+
+	private static async Task<IResult> UploadFile(IBrowserFile file, [FromServices] IFileService fileService)
+	{
+		var res = await fileService.UploadFile(file);
+		return Results.Ok(res);
 	}
 
 	private static async Task<IResult> DeleteBlog(int id, [FromServices] IBlogsService blogsService)

@@ -9,7 +9,7 @@ public class EditorInterop
 
 	public EditorInterop(IJSRuntime js)
 	{
-		moduleTask = new Lazy<Task<IJSObjectReference>>(() => js.InvokeAsync<IJSObjectReference>("import", "./assets/js/editor.js").AsTask());
+		moduleTask = new Lazy<Task<IJSObjectReference>>(() => js.InvokeAsync<IJSObjectReference>("import", "./js/editor.js").AsTask());
 	}
 
 	public async ValueTask LoadEditorAsync(ElementReference textareaElement, ElementReference inputFileElement, string toolbar = "miniToolbar")
@@ -22,6 +22,12 @@ public class EditorInterop
 	{
 		var module = await moduleTask.Value;
 		await module.InvokeVoidAsync("writeFrontFile", imageUpload);
+	}
+
+	public async ValueTask WriteFrontFileTempAsync(string filename, string url)
+	{
+		var module = await moduleTask.Value;
+		await module.InvokeVoidAsync("writeFrontFileTemp", filename, url);
 	}
 
 	public async ValueTask SetEditorValueAsync(string content)

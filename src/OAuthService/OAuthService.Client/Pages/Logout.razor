@@ -1,0 +1,30 @@
+﻿@page "/logout"
+@inject IAuthService authSvc
+@inject NavigationManager nav
+@attribute [StreamRendering]
+
+<div>@message</div>
+
+@code {
+    [SupplyParameterFromQuery] public string? ReturnUrl { get; set; }
+    private string message = "Logging out...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await authSvc.LogoutAsync();
+
+        await Task.Delay(1000);
+
+        if (string.IsNullOrEmpty(ReturnUrl))
+        {
+            message = "Logged out.";
+        }
+        else
+        {
+            nav.NavigateTo(ReturnUrl);
+        }
+    }
+
+    private bool DoNothing() => true;
+    private bool Redirect() => true;
+}

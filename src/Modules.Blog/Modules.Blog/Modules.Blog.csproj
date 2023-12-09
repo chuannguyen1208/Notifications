@@ -9,6 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="wwwroot\assets\**" />
+	  <Content Remove="wwwroot\assets\**" />
+	  <EmbeddedResource Remove="wwwroot\assets\**" />
+	  <None Remove="wwwroot\assets\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\Modules.Shared\Modules.Shared.csproj" />
 		<ProjectReference Include="..\..\Tools\Tools.csproj" />
 		<ProjectReference Include="..\Modules.Blog.Client\Modules.Blog.Client.csproj" />
@@ -23,19 +30,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="wwwroot\assets\css\" />
-		<Folder Include="wwwroot\assets\js\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="wwwroot\assets\.tt">
-	    <Generator>TextTemplatingFileGenerator</Generator>
-	    <LastGenOutput>.txt</LastGenOutput>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\js\" />
+	  <Folder Include="wwwroot\css\" />
 	</ItemGroup>
 
 </Project>

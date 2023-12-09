@@ -79,6 +79,8 @@ app.MigrateAuthTool();
 app.MapReverseProxy();
 
 app.MapPost("/login", PostLogin);
+app.MapPost("/logout", PostLogout);
+
 app.MapPost("/register", PostRegister);
 
 await AuthDbSeeder.SeedData(app.Services);
@@ -92,6 +94,12 @@ async Task<IResult> PostLogin([FromBody] LoginModel model, [FromServices] IAuthS
 		false => Results.BadRequest("Invalid username or password."),
 		_ => Results.Ok()
 	};
+}
+
+async Task<IResult> PostLogout([FromServices] IAuthService authService)
+{
+	await authService.LogoutAsync();
+	return Results.Ok();
 }
 
 

@@ -1,7 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@attribute [Authorize]
-@inject IJSRuntime JS
-@inject NavigationManager Nav
 
 <style>
     .navbar-brand .subtitle {
@@ -51,11 +48,7 @@
             <div class="collapse navbar-collapse justify-content-end fs-5">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <MyComps.Tooltip TooltipContent="Login">
-                            <a class="nav-link position-relative ms-2 nav-link-login" href="auth">
-                                <i class="bi bi-box-arrow-in-right"></i>
-                            </a>
-                        </MyComps.Tooltip>
+                        <MyComps.AuthInfo></MyComps.AuthInfo>
                     </li>
                 </ul>
             </div>
@@ -63,10 +56,3 @@
     </header>
     @Body
 </div>
-
-@code {
-    private bool IsPageActive(string page)
-    {
-        return true;
-    }
-}

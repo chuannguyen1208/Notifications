@@ -21,6 +21,19 @@ internal class BlogRepo(BlogDbContext context) : IBlogsRepo
 		}
 	}
 
+	public async Task EditBlog(BlogEntity blog)
+	{
+		var entity = context.Blogs.Find(blog.Id);
+		if (entity != null)
+		{
+			entity.Title = blog.Title;
+			entity.Description = blog.Description;
+			entity.Content = blog.Content;
+
+			await context.SaveChangesAsync();
+		}
+	}
+
 	public async Task<BlogEntity?> GetBlogAsync(int id)
 	{
 		var entity = context.Blogs.Find(id);

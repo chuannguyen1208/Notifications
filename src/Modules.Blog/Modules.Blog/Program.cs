@@ -12,6 +12,7 @@ using Modules.Blog.Infra;
 using Modules.Blog.Client.Layout;
 using Modules.Blog.Shared.Services;
 using Modules.Blog.Services;
+using Modules.Blog.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,12 +33,16 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 builder.Services.AddModuleBlogs();
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("default", client =>
+{
+	client.BaseAddress = new Uri(builder.Configuration["BaseUrl"]!);
+});
 
 builder.Services.AddScoped<IBlogsService, BlogsService>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IToastService, CommonInterop>();
-builder.Services.AddTransient<IBlobService, CommonInterop>();
+builder.Services.AddTransient<IBlobService, BlobService>();
+builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<EditorInterop>();
 
 var app = builder.Build();

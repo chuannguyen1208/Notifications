@@ -5,20 +5,41 @@
 @inject EditorInterop _editorInterop
 @inject IBlobService _blobSvc
 @inject IToastService _toastSvc
+@inject IFileService _fileSvc
+@inject NavigationManager nav
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
-<InputFile @ref="_uploadFileElement" OnChange="@LoadImageFiles" style="display: none"></InputFile>
+<InputFile @ref="_uploadFileElement" OnChange="@LoadFile" style="display: none" accept="image/*"></InputFile>
 
 @code {
     ElementReference _textareaElement;
     InputFile _uploadFileElement = null!;
+    private long maxFileSize = 1024 * 500; // 500KB
+    [Parameter] public string? Content { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await _editorInterop.LoadEditorAsync(_textareaElement, _uploadFileElement.Element!.Value);
-            await _toastSvc.ToastInfo("Editor loaded.");
+            if (!string.IsNullOrEmpty(Content))
+                await _editorInterop.SetEditorValueAsync(Content);
+        }
+    }
+
+    private async Task LoadFile(InputFileChangeEventArgs args)
+    {
+        try
+        {
+            var filename = args.File.Name;
+            var url = await _fileSvc.UploadFile(args.File, maxFileSize);
+            // var fullUrl = nav.BaseUri + url.Replace('\\', '/');
+            await _editorInterop.WriteFrontFileTempAsync(filename, url);
+        }
+        catch(Exception ex)
+        {
+            var message = ex.Message;
+            await _toastSvc.ToastError(message);
         }
     }
 
@@ -31,8 +52,7 @@
     public async Task<string> GetContentAsync()
     {
         var content = await _editorInterop.GetEditorValueAsync();
-        var imgsMatches = StringHelper.MarkdownImgBlobGeneratedRegex().Matches(content);
-
+        var imgsMatches = StringHelper.MarkdownImgTempGeneratedRegex().Matches(content);
         if (imgsMatches.Count > 0)
         {
             var contentStringBuilder = new StringBuilder(content);
@@ -46,7 +66,6 @@
 
             content = contentStringBuilder.ToString();
         }
-
         return content;
     }
 }

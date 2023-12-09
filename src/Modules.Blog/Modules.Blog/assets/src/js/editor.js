@@ -249,6 +249,13 @@ export function writeFrontFile(inputElement) {
     codemirror.replaceSelection(output);
 }
 
+export function writeFrontFileTemp(fileName, url) {
+    let output = '\r\n![' + fileName + '](' + url + ')';
+    let codemirror = easymde.codemirror;
+    codemirror.selection;
+    codemirror.replaceSelection(output);
+}
+
 export function toggleToolbarTooltip() {
     const buttons = document.querySelectorAll('.editor-toolbar button');
     for (var i = 0; i < buttons.length; i++) {
