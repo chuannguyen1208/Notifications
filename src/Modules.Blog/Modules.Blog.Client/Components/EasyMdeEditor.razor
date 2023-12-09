@@ -9,11 +9,12 @@
 @inject NavigationManager nav
 
 <textarea @ref="_textareaElement" placeholder="Type here..." style="display: none"></textarea>
-<InputFile @ref="_uploadFileElement" OnChange="@LoadFile" style="display: none"></InputFile>
+<InputFile @ref="_uploadFileElement" OnChange="@LoadFile" style="display: none" accept="image/*"></InputFile>
 
 @code {
     ElementReference _textareaElement;
     InputFile _uploadFileElement = null!;
+    private long maxFileSize = 1024 * 1;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -25,10 +26,18 @@
 
     private async Task LoadFile(InputFileChangeEventArgs args)
     {
-        var filename = args.File.Name;
-        var url = await _fileSvc.UploadFile(args.File);
-        var fullUrl = nav.BaseUri + url.Replace('\\', '/');
-        await _editorInterop.WriteFrontFileTempAsync(filename, fullUrl);
+        try
+        {
+            var filename = args.File.Name;
+            var url = await _fileSvc.UploadFile(args.File, maxFileSize);
+            var fullUrl = nav.BaseUri + url.Replace('\\', '/');
+            await _editorInterop.WriteFrontFileTempAsync(filename, fullUrl);
+        }
+        catch(Exception ex)
+        {
+            var message = ex.Message;
+            await _toastSvc.ToastError(message);
+        }
     }
 
     protected async Task LoadImageFiles(InputFileChangeEventArgs args)

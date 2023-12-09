@@ -5,7 +5,7 @@ namespace Modules.Blog.Client.Services;
 
 internal class FileService : IFileService
 {
-	public Task<string> UploadFile(IBrowserFile file)
+	public Task<string> UploadFile(IBrowserFile file, long maxFileSize = 15360)
 	{
 		throw new NotImplementedException();
 	}

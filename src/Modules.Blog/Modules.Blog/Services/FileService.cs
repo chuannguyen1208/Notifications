@@ -5,7 +5,7 @@ namespace Modules.Blog.Services;
 
 internal class FileService(IWebHostEnvironment env) : IFileService
 {
-	public async Task<string> UploadFile(IBrowserFile file)
+	public async Task<string> UploadFile(IBrowserFile file, long maxFileSize = 15360)
 	{
 		var fileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
 		var returnFilePath = Path.Combine("img", "temp", fileName);
@@ -14,8 +14,9 @@ internal class FileService(IWebHostEnvironment env) : IFileService
 		Directory.CreateDirectory(dir!);
 
 		await using FileStream fs = new(filePath, FileMode.Create);
-		await file.OpenReadStream().CopyToAsync(fs);
+		await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
 
 		return returnFilePath;
 	}
+
 }
