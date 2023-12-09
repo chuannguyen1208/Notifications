@@ -8,7 +8,7 @@ internal class FileService(IWebHostEnvironment env) : IFileService
 	public async Task<string> UploadFile(IBrowserFile file)
 	{
 		var fileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
-		var returnFilePath = Path.Combine("img\\temp", fileName);
+		var returnFilePath = Path.Combine("img", "temp", fileName);
 		var filePath = Path.Combine(env.ContentRootPath, "wwwroot", returnFilePath);
 		var dir = Path.GetDirectoryName(filePath);
 		Directory.CreateDirectory(dir!);
