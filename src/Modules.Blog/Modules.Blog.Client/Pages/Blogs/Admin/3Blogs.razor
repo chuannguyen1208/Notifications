@@ -7,8 +7,7 @@
 <ul class="list-group">
     <li class="list-group-item border-0">
         <div class="d-flex align-items-center">
-            <input class="form-check-input" type="checkbox">
-            <a class="btn btn-primary btn-md rounded-pill px-4 py-2 ms-3 btn-new-post" href="adm/blog/0">New Post</a>
+            <a class="btn btn-primary btn-md rounded-pill px-4 py-2 btn-new-post" href="adm/blog/0">New Post</a>
         </div>
     </li>
     @foreach (var blog in blogs)
@@ -21,7 +20,6 @@
                         @blog.Title
                     </label>
                 </div>
-
                 <div>
                     <span>@blog.Created.ToString("MMM d, yyyy")</span>
                 </div>
@@ -41,7 +39,6 @@
             </div>
         </li>
     }
-
 </ul>
 
 @code {
