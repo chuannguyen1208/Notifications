@@ -11,7 +11,7 @@ services:
     ports:
       - 80
     volumes:
-      - ./.containers/db:/app/db
+      - ./.containers/${ENVIRONMENT}/db:/app/db
   modules.blog:
     container_name: modules.blog
     environment:
@@ -19,7 +19,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - BaseUrl=http://localhost
     volumes:
-      - ./.containers/db:/app/db
+      - ./.containers/${ENVIRONMENT}/db:/app/db
 
   # sqlserver:
   #   volumes:
