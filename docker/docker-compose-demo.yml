@@ -26,6 +26,29 @@ services:
     networks:
       - my_network
 
+  ngrok:
+    image: ngrok/ngrok:latest
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+    networks:
+      - my_network
+
+# sample ngrok yml
+# authtoken: 
+# version: 2
+# tunnels:
+#   website:
+#     addr: http://demo.noti.host
+#     proto: http
+#     domain: suddenly-unique-osprey.ngrok-free.app
+
 networks:
   my_network:
     driver: bridge
