@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  host.web:
+    image: demo.noti.host
+    container_name: demo.noti.host
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://modules.blog
+    ports:
+      - 80
+    volumes:
+      - ./.containers/${ENVIRONMENT}/db:/app/db
+    networks:
+      - my_network
+
+  modules.blog:
+    image: demo.noti.blog
+    container_name: demo.noti.blog
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ./.containers/${ENVIRONMENT}/db:/app/db
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+  
