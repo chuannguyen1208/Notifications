@@ -1,0 +1,100 @@
+version: '3.4'
+
+services:
+  host.web:
+    image: demo.noti.host
+    container_name: demo.noti.host
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://demo.noti.blog
+      - ReverseProxy__Clusters__cshop__Destinations__destination1__Address=http://demo.noti.coffee
+    ports:
+      - 80
+    volumes:
+      - ./.containers/${ENVIRONMENT}/db:/app/db
+    networks:
+      - my_network
+
+  modules.blog:
+    image: demo.noti.blog
+    container_name: demo.noti.blog
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ./.containers/${ENVIRONMENT}/db:/app/db
+    networks:
+      - my_network
+
+  modules.coffee:
+    image: demo.noti.coffee
+    container_name: demo.noti.coffee
+    ports:
+      - 80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__Default=Server=demo.tool.mssql,1433;Database=cshop;User Id=sa;Password=Pass@word;TrustServerCertificate=true;MultipleActiveResultSets=true;
+      - ConnectionStrings__Messaging=Server=demo.tool.mssql,1433;Database=cshop;User Id=sa;Password=Pass@word;TrustServerCertificate=true;MultipleActiveResultSets=true;
+      - RabbitMQSettings__Host=rmq
+    networks:
+      - my_network
+ 
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: demo.tool.mssql
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433"
+    networks:
+      - my_network
+    volumes:
+      - ./.containers/${ENVIRONMENT}/mssql:/var/opt/mssql/data
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: demo.tool.rabbitmq
+    hostname: rmq
+    ports:
+      - "5672"  # RabbitMQ default port
+      - "15672"  # RabbitMQ management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    networks:
+      - my_network
+    volumes:
+      - ./.containers/${ENVIRONMENT}/rabbitmq/data:/var/lib/rabbitmq
+      - ./.containers/${ENVIRONMENT}/rabbitmq/logs:/var/log/rabbitmq
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    ports:
+      - 4040:4040
+    networks:
+      - my_network
+
+# sample ngrok yml
+# authtoken: 
+# version: 2
+# tunnels:
+#   website:
+#     addr: http://demo.noti.host
+#     proto: http
+#     domain: suddenly-unique-osprey.ngrok-free.app
+
+networks:
+  my_network:
+    driver: bridge
+
+  
