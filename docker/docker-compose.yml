@@ -4,7 +4,7 @@ services:
   host.web:
     image: ${DOCKER_REGISTRY-}oauth.host
     build:
-      context: .
+      context: ../.
       dockerfile: src/OAuthService/OAuthService/Dockerfile
     networks:
       - my_network
@@ -12,7 +12,7 @@ services:
   modules.blog:
     image: ${DOCKER_REGISTRY-}module.blog
     build:
-      context: .
+      context: ../.
       dockerfile: src/Modules.Blog/Modules.Blog/Dockerfile
     networks:
       - my_network

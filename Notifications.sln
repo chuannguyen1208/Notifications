@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.SolutionItems", "0.Soluti
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "3.DockerCompose", "3.DockerCompose.dcproj", "{CBE5DD95-514E-42AB-A181-B12A92C871C5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Utilities", "1.Utilities", "{6A2EF3E3-D980-45F3-9372-E14E3F7DF149}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "src\Tools\Tools.csproj", "{A232BF24-7162-4847-9ABE-49DBF16FC497}"
@@ -51,16 +49,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Shared", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorPageScript", "src\BlazorPageScript\BlazorPageScript.csproj", "{04410DD1-229F-4938-8DC5-E4F7C87C6DD0}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "3.DockerCompose", "docker\3.DockerCompose.dcproj", "{CBE5DD95-514E-42AB-A181-B12A92C871C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A232BF24-7162-4847-9ABE-49DBF16FC497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A232BF24-7162-4847-9ABE-49DBF16FC497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A232BF24-7162-4847-9ABE-49DBF16FC497}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,6 +105,10 @@ Global
 		{04410DD1-229F-4938-8DC5-E4F7C87C6DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04410DD1-229F-4938-8DC5-E4F7C87C6DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04410DD1-229F-4938-8DC5-E4F7C87C6DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBE5DD95-514E-42AB-A181-B12A92C871C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
