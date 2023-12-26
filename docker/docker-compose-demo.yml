@@ -6,15 +6,19 @@ services:
     container_name: demo.noti.host
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=https://+:443;http://+:80
       - ReverseProxy__Clusters__blogsCluster__Destinations__destination1__Address=http://demo.noti.blog
       - ReverseProxy__Clusters__cshop__Destinations__destination1__Address=http://demo.noti.coffee
-    ports:
-      - 80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/notification.pfx 
+    # ports:
+    #   - 80
+    #   - 443
     volumes:
       - ./.containers/${ENVIRONMENT}/db:/app/db
+      - ~/.aspnet/https:/https:ro
     networks:
-      - my_network
+      - default
 
   modules.blog:
     image: demo.noti.blog
@@ -25,13 +29,13 @@ services:
     volumes:
       - ./.containers/${ENVIRONMENT}/db:/app/db
     networks:
-      - my_network
+      - default
 
   modules.coffee:
     image: demo.noti.coffee
     container_name: demo.noti.coffee
-    ports:
-      - 80
+    # ports:
+    #   - 80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
@@ -39,7 +43,7 @@ services:
       - ConnectionStrings__Messaging=Server=demo.tool.mssql,1433;Database=cshop;User Id=sa;Password=Pass@word;TrustServerCertificate=true;MultipleActiveResultSets=true;
       - RabbitMQSettings__Host=rmq
     networks:
-      - my_network
+      - default
  
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -47,10 +51,10 @@ services:
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
-    ports:
-      - "1433"
+    # ports:
+    #   - "1433"
     networks:
-      - my_network
+      - default
     volumes:
       - ./.containers/${ENVIRONMENT}/mssql:/var/opt/mssql/data
 
@@ -58,14 +62,14 @@ services:
     image: "rabbitmq:3-management"
     container_name: demo.tool.rabbitmq
     hostname: rmq
-    ports:
-      - "5672"  # RabbitMQ default port
-      - "15672"  # RabbitMQ management UI port
+    # ports:
+    #   - "5672"  # RabbitMQ default port
+    #   - "15672"  # RabbitMQ management UI port
     environment:
       RABBITMQ_DEFAULT_USER: rabbitmq
       RABBITMQ_DEFAULT_PASS: rabbitmq
     networks:
-      - my_network
+      - default
     volumes:
       - ./.containers/${ENVIRONMENT}/rabbitmq/data:/var/lib/rabbitmq
       - ./.containers/${ENVIRONMENT}/rabbitmq/logs:/var/log/rabbitmq
@@ -82,7 +86,7 @@ services:
     ports:
       - 4040:4040
     networks:
-      - my_network
+      - default
 
 # sample ngrok yml
 # authtoken: 
@@ -94,7 +98,7 @@ services:
 #     domain: suddenly-unique-osprey.ngrok-free.app
 
 networks:
-  my_network:
+  default:
     driver: bridge
 
   
